@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', '\App\Services\Parsers\ParseBauinvestTest@parse');
+Route::get('/', '\App\Services\Parsers\ParseEuropeyaTest@parse');

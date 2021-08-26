@@ -52,10 +52,10 @@ class IspaniaJK extends Command
             'Испания ЖК', 'Испания Земля с домами', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=380',
-            'Испания ЖК', 'Испания ИЖС (8 соток) 1линия', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Испания ЖК', 'Испания ИЖС (8 соток) 1 линия', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=381',
-            'Испания ЖК', 'Испания ИЖС (8 соток) 2линия', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Испания ЖК', 'Испания ИЖС (8 соток) 2 линия', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=382',
             'Испания ЖК', 'Испания ИЖС (8 соток) основной масив', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');

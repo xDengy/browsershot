@@ -49,7 +49,7 @@ class ZeleniyTeatrJK extends Command
     public function handle()
     {
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=11',
-            'Зеленый театр ЖК', 'Зеленый театр Литер 6', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Зеленый театр ЖК', 'Литер 6', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, 'public/xml/europeya:zeleniyTeatrJK');
     }

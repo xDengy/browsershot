@@ -49,13 +49,13 @@ class MoiGorodJK extends Command
     public function handle()
     {
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=390',
-            'Мой город ЖК', 'Мой город Литер5 Квартал3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Мой город ЖК', 'Литер 5 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=391',
-            'Мой город ЖК', 'Мой город Литер3 Квартал3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Мой город ЖК', 'Литер 3 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=392',
-            'Мой город ЖК', 'Мой город Литер7 Квартал3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Мой город ЖК', 'Литер 7 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Мой город ЖК');
 

@@ -41,13 +41,13 @@ class ParseMagistratDon
                 $img = str_replace('"', '', $info[9]);
 
 
-                $newBody['complexes']['complex']['buildings']['building'][] = [
+                $newBody ['complex']['buildings']['building'][] = [
                     'id' => '',
                     'name' => '',
                 ];
 
-                $newBody['complexes']['complex']['buildings']['building'][0]['id'] = md5($text[0]);
-                $newBody['complexes']['complex']['buildings']['building'][0]['name'] = $text[0];
+                $newBody ['complex']['buildings']['building'][0]['id'] = md5($text[0]);
+                $newBody ['complex']['buildings']['building'][0]['name'] = $text[0];
 
                 $newFlat = [];
 
@@ -58,7 +58,7 @@ class ParseMagistratDon
                 $newFlat['floor'] = $text[2];
                 $newFlat['plan'] = $img;
 
-                $newBody['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] =
+                $newBody ['complex']['buildings']['building'][0]['flats']['flat'][] =
                     $newFlat;
 
                 return $newBody;
@@ -67,15 +67,15 @@ class ParseMagistratDon
             $sortArr = [];
             $jkArr = [];
 
-            $jkArr['complexes']['complex']['id'] = md5($name);
-            $jkArr['complexes']['complex']['name'] = $name;
+            $jkArr ['complex']['id'] = md5($name);
+            $jkArr ['complex']['name'] = $name;
 
             foreach ($arr as $key => $item) {
                 foreach ($arr as $newKey => $newItem) {
-                    if ($item['complexes']['complex']['buildings']['building'][0]['name'] ==
-                        $newItem['complexes']['complex']['buildings']['building'][0]['name']) {
+                    if ($item ['complex']['buildings']['building'][0]['name'] ==
+                        $newItem ['complex']['buildings']['building'][0]['name']) {
 
-                        $sortArr['complexes']['complex']['buildings']['building'][$newKey] = $newItem['complexes']['complex']['buildings']['building'][0];
+                        $sortArr ['complex']['buildings']['building'][$newKey] = $newItem ['complex']['buildings']['building'][0];
 
                         unset($newItem);
                         $arr = array_values($arr);
@@ -83,38 +83,45 @@ class ParseMagistratDon
                 }
             }
 
-            $sortArr['complexes']['complex']['buildings']['building'] = array_values($sortArr['complexes']['complex']['buildings']['building']);
+            $sortArr ['complex']['buildings']['building'] = array_values($sortArr ['complex']['buildings']['building']);
 
-            foreach ($sortArr['complexes']['complex']['buildings']['building'] as $key => $value) {
-                foreach ($sortArr['complexes']['complex']['buildings']['building'] as $newKey => $item) {
+            foreach ($sortArr ['complex']['buildings']['building'] as $key => $value) {
+                foreach ($sortArr ['complex']['buildings']['building'] as $newKey => $item) {
 
-                    if ($sortArr['complexes']['complex']['buildings']['building'][$key]['name']
-                        == $sortArr['complexes']['complex']['buildings']['building'][$newKey]['name']) {
+                    if ($sortArr ['complex']['buildings']['building'][$key]['name']
+                        == $sortArr ['complex']['buildings']['building'][$newKey]['name']) {
 
-                        $jkArr['complexes']['complex']['buildings']['building'][$key]['name'] =
-                            $sortArr['complexes']['complex']['buildings']['building'][$key]['name'];
+                        $jkArr ['complex']['buildings']['building'][$key]['name'] =
+                            $sortArr ['complex']['buildings']['building'][$key]['name'];
 
-                        $jkArr['complexes']['complex']['buildings']['building'][$key]['id'] =
-                            $sortArr['complexes']['complex']['buildings']['building'][$key]['id'];
+                        $jkArr ['complex']['buildings']['building'][$key]['id'] =
+                            $sortArr ['complex']['buildings']['building'][$key]['id'];
 
-                        $jkArr['complexes']['complex']['buildings']['building'][$key]['flats']['flat'][] =
-                            $sortArr['complexes']['complex']['buildings']['building'][$newKey]['flats']['flat'][0];
+                        $jkArr ['complex']['buildings']['building'][$key]['flats']['flat'][] =
+                            $sortArr ['complex']['buildings']['building'][$newKey]['flats']['flat'][0];
 
                     }
                 }
             }
 
-            $jkArr['complexes']['complex']['buildings']['building'] =
-                array_unique($jkArr['complexes']['complex']['buildings']['building'], SORT_REGULAR);
+            $jkArr ['complex']['buildings']['building'] =
+                array_unique($jkArr ['complex']['buildings']['building'], SORT_REGULAR);
 
-            $jkArr['complexes']['complex']['buildings']['building'] =
-                array_values($jkArr['complexes']['complex']['buildings']['building']);
+            $jkArr ['complex']['buildings']['building'] =
+                array_values($jkArr ['complex']['buildings']['building']);
 
-            $results = ArrayToXml::convert($jkArr);
+            $results = ArrayToXml::convert($jkArr, 'complexes');
 
             $dom = new DOMDocument($results);
 
             $dom->save($path . '.xml');
+
+            $contents = file_get_contents($path . '.xml');
+
+            $contents = str_replace("<?xml version='", '', $contents);
+            $contents = str_replace("'?>", '', $contents);
+
+            file_put_contents($path . '.xml', $contents);
         });
 
 

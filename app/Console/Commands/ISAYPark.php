@@ -49,7 +49,7 @@ class ISAYPark extends Command
     public function handle()
     {
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=8',
-            'ISAY - Парк', 'ISAY - Парк Литер1 Квартал1', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'ISAY - Парк', 'Литер 1 Квартал 1', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, 'public/xml/europeya:isayPark');
     }
