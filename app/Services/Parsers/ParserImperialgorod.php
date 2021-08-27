@@ -8,9 +8,9 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParserImperialgorod
+class ParserImperialgorod implements Parser
 {
-    public function parse($link, $path, $name)
+    public function parse(string $link, string $path, string $name)
     {
         $html = file_get_contents($link);
 
@@ -40,18 +40,17 @@ class ParserImperialgorod
         });
 
         $newBody = [
-            'complexes' =>
-                ['complex' =>
-                    [   'id' => md5($name),
-                        'name' => $name,
-                        'buildings' => [],
-                    ]
+            'complex' =>
+                ['id' => md5($name),
+                    'name' => $name,
+                    'buildings' => [],
                 ]
+
         ];
 
         foreach ($responses as $responseKey => $response) {
 
-            $newBody['complexes']['complex']['buildings']['building'][$responseKey] = [
+            $newBody ['complex']['buildings']['building'][$responseKey] = [
                 'id' => '',
                 'name' => '',
             ];
@@ -59,8 +58,8 @@ class ParserImperialgorod
             $body = $response->getBody();
             $body = json_decode((string)$body, true);
 
-            $newBody['complexes']['complex']['buildings']['building'][$responseKey]['id'] = md5($liter[$responseKey]);
-            $newBody['complexes']['complex']['buildings']['building'][$responseKey]['name'] = $liter[$responseKey];
+            $newBody ['complex']['buildings']['building'][$responseKey]['id'] = md5($liter[$responseKey]);
+            $newBody ['complex']['buildings']['building'][$responseKey]['name'] = $liter[$responseKey];
 
             $sections = $body['data']['sections'];
             foreach ($sections as $secKey => $section) {
@@ -109,7 +108,7 @@ class ParserImperialgorod
 
                         } else {
 
-                            $href = file_get_contents( 'https://www.imperialgorod.ru' . $flat['href']);
+                            $href = file_get_contents('https://www.imperialgorod.ru' . $flat['href']);
 
                             $crawler = new Crawler($href);
 
@@ -123,12 +122,12 @@ class ParserImperialgorod
 
                             $newFlat['apartment'] = $flat['number'];
                             $newFlat['room'] = $flat['rooms'];
-                            $newFlat['price'] = $flat['price'];
-                            $newFlat['area'] = $flat['area'];
+                            $newFlat['price'] = str_replace('&nbsp;₽', '', $flat['price']);
+                            $newFlat['area'] = str_replace('&nbsp;м²', '', $flat['area']);
                             $newFlat['floor'] = $floorKey + 1;
                             $newFlat['plan'] = $src[0][0];
 
-                            $newBody['complexes']['complex']['buildings']['building'][$responseKey]['flats']['flat'][] =
+                            $newBody ['complex']['buildings']['building'][$responseKey]['flats']['flat'][] =
                                 $newFlat;
                         }
 
@@ -137,10 +136,17 @@ class ParserImperialgorod
             }
         }
 
-        $results = ArrayToXml::convert($newBody);
+        $results = ArrayToXml::convert($newBody, 'complexes');
 
         $dom = new DOMDocument($results);
 
         $dom->save($path . '.xml');
+
+        $contents = file_get_contents($path . '.xml');
+
+        $contents = str_replace("<?xml version='", '', $contents);
+        $contents = str_replace("'?>", '', $contents);
+
+        file_put_contents($path . '.xml', $contents);
     }
 }

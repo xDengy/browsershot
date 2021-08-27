@@ -17,11 +17,11 @@ class ParseBauinvest
 
         $crawler = new Crawler($html);
 
-        $jkArr['complexes']['complex']['id'] = md5($complexName);
-        $jkArr['complexes']['complex']['name'] = $complexName;
-        $jkArr['complexes']['complex']['buildings']['building'] = [];
+        $jkArr['complex']['id'] = md5($complexName);
+        $jkArr['complex']['name'] = $complexName;
+        $jkArr['complex']['buildings']['building'] = [];
 
-        $jkArr['complexes']['complex']['buildings']['building'] =
+        $jkArr['complex']['buildings']['building'] =
             $crawler->filter('.spare__chess')->each(function (Crawler $node, $i) {
                 return [
                     'id' => $node->filter('.spare__chessRoom-free')->each(function (Crawler $node, $i) {
@@ -34,7 +34,9 @@ class ParseBauinvest
                             return $node->text();
                         });
 
-                        return md5($name[0]);
+                        $info = explode(' | ', $name[0]);
+
+                        return md5($info[1]);
                     })[0],
 
                     'name' =>
@@ -48,7 +50,9 @@ class ParseBauinvest
                                 return $node->text();
                             });
 
-                            return $name[0];
+                            $info = explode(' | ', $name[0]);
+
+                            return $info[1];
                         })[0],
 
                     'flats' => ['flat' => $node->filter('.spare__chessRoom-free')->each(function (Crawler $node, $i) {
@@ -68,21 +72,21 @@ class ParseBauinvest
                         $flat['apartment'] = $node->attr('data-num');
                         $flat['rooms'] = $node->attr('data-rooms');
                         $flat['price'] = $node->attr('data-cost-total');
-                        $flat['area'] = $node->attr('data-area-full');
-                        $flat['floor'] = $floor[3][0];
+                        $flat['price'] = str_replace(' ₽', '', $node->attr('data-cost-total'));
+                        $flat['area'] = str_replace('"', '', $node->attr('data-area-full'));
 
-                        $flat['plan'] = $node->attr('data-plan-img');
+                        $floor = explode('/', $floor[4][0]);
+                        $flat['floor'] = $floor[0];
 
+                        $flat['plan'] = str_replace('"', '', $node->attr('data-plan-img'));
 
                         return $flat;
                     })]
                 ];
             });
 
-        $results = ArrayToXml::convert($jkArr);
+        $results = ArrayToXml::convert($jkArr, 'complexes');
 
-        $dom = new DOMDocument($results);
-
-        $dom->save($path . '.xml');
+        file_put_contents($path . '.xml', $results);
     }
 }

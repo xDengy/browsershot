@@ -49,7 +49,7 @@ class PortugaliaJK extends Command
     public function handle()
     {
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=37',
-            'Португалия ЖК', 'Литер 30 Квартал3 очередь2 Португалия', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+            'Португалия ЖК', 'Литер 30 Квартал 3 очередь 2', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, 'public/xml/europeya:portugaliaJK');
     }
