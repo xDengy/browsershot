@@ -8,15 +8,15 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParseMagistratDon
+class ParseMagistratDon implements Parser
 {
-    public function parse($link, $path, $name)
+    public function parse (string $link, string $path, string $complexName)
     {
 
         $crawler = new Crawler(Browsershot::url($link)
             ->bodyHtml());
 
-        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $name)  {
+        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $complexName)  {
 
             $newBody = [
                 'complexes' =>
@@ -56,7 +56,13 @@ class ParseMagistratDon
                 $newFlat['price'] = $text[5];
                 $newFlat['area'] = $text[4];
                 $newFlat['floor'] = $text[2];
-                $newFlat['plan'] = $img;
+
+                if ($img == '') {
+                    $newFlat['plan'] = $img;
+                }
+                else {
+                    $newFlat['plan'] = 'https://magistrat-don.ru' . $img;
+                }
 
                 $newBody ['complex']['buildings']['building'][0]['flats']['flat'][] =
                     $newFlat;
@@ -67,8 +73,8 @@ class ParseMagistratDon
             $sortArr = [];
             $jkArr = [];
 
-            $jkArr ['complex']['id'] = md5($name);
-            $jkArr ['complex']['name'] = $name;
+            $jkArr ['complex']['id'] = md5($complexName);
+            $jkArr ['complex']['name'] = $complexName;
 
             foreach ($arr as $key => $item) {
                 foreach ($arr as $newKey => $newItem) {
@@ -112,16 +118,7 @@ class ParseMagistratDon
 
             $results = ArrayToXml::convert($jkArr, 'complexes');
 
-            $dom = new DOMDocument($results);
-
-            $dom->save($path . '.xml');
-
-            $contents = file_get_contents($path . '.xml');
-
-            $contents = str_replace("<?xml version='", '', $contents);
-            $contents = str_replace("'?>", '', $contents);
-
-            file_put_contents($path . '.xml', $contents);
+            file_put_contents($path . '.xml', $results);
         });
 
 

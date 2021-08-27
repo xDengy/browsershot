@@ -46,6 +46,9 @@ class JKMalina extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('5845', 'ЖК Малина', 'public/xml/neometria:Malina');
+        (new ParseNeometria)->parse(
+            '5845',
+            public_path('/xml/neometria:Malina'),
+            'ЖК Малина');
     }
 }

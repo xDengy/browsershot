@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ParserImperialgorod implements Parser
 {
-    public function parse(string $link, string $path, string $name)
+    public function parse(string $link, string $path, string $complexName)
     {
         $html = file_get_contents($link);
 
@@ -41,8 +41,8 @@ class ParserImperialgorod implements Parser
 
         $newBody = [
             'complex' =>
-                ['id' => md5($name),
-                    'name' => $name,
+                ['id' => md5($complexName),
+                    'name' => $complexName,
                     'buildings' => [],
                 ]
 
@@ -125,7 +125,13 @@ class ParserImperialgorod implements Parser
                             $newFlat['price'] = str_replace('&nbsp;₽', '', $flat['price']);
                             $newFlat['area'] = str_replace('&nbsp;м²', '', $flat['area']);
                             $newFlat['floor'] = $floorKey + 1;
-                            $newFlat['plan'] = $src[0][0];
+
+                            if ($src[0][0] == '') {
+                                $newFlat['plan'] = $src[0][0];
+                            }
+                            else {
+                                $newFlat['plan'] = 'https://www.imperialgorod.ru' . $src[0][0];
+                            }
 
                             $newBody ['complex']['buildings']['building'][$responseKey]['flats']['flat'][] =
                                 $newFlat;
@@ -138,15 +144,6 @@ class ParserImperialgorod implements Parser
 
         $results = ArrayToXml::convert($newBody, 'complexes');
 
-        $dom = new DOMDocument($results);
-
-        $dom->save($path . '.xml');
-
-        $contents = file_get_contents($path . '.xml');
-
-        $contents = str_replace("<?xml version='", '', $contents);
-        $contents = str_replace("'?>", '', $contents);
-
-        file_put_contents($path . '.xml', $contents);
+        file_put_contents($path . '.xml', $results);
     }
 }

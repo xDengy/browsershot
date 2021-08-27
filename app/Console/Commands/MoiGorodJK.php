@@ -48,17 +48,26 @@ class MoiGorodJK extends Command
 
     public function handle()
     {
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=390',
-            'Мой город ЖК', 'Литер 5 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=390',
+            'Мой город ЖК',
+            'Литер 5 Квартал 3',
+            'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=391',
-            'Мой город ЖК', 'Литер 3 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=391',
+            'Мой город ЖК',
+            'Литер 3 Квартал 3',
+            'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=392',
-            'Мой город ЖК', 'Литер 7 Квартал 3', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=392',
+            'Мой город ЖК',
+            'Литер 7 Квартал 3',
+            'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Мой город ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, 'public/xml/europeya:moiGorodJK');
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/europeya:moiGorodJK'));
     }
 }

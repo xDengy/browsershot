@@ -8,10 +8,9 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParseBauinvest
+class ParseBauinvest implements Parser
 {
-
-    public function parse($link, $complexName, $path)
+    public function parse (string $link, string $path, string $complexName)
     {
         $html = file_get_contents($link);
 
@@ -78,7 +77,13 @@ class ParseBauinvest
                         $floor = explode('/', $floor[4][0]);
                         $flat['floor'] = $floor[0];
 
-                        $flat['plan'] = str_replace('"', '', $node->attr('data-plan-img'));
+                        $img = str_replace('"', '', $node->attr('data-plan-img'));
+                        if ($img == '') {
+                            $flat['plan'] = $img;
+                        }
+                        else {
+                            $flat['plan'] = 'https://sk-bauinvest.ru' . $img;
+                        }
 
                         return $flat;
                     })]

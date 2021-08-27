@@ -46,6 +46,9 @@ class MRUjane extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('62', 'МР Южане', 'public/xml/neometria:Ujane');
+        (new ParseNeometria)->parse(
+            '62',
+            public_path('/xml/neometria:Ujane'),
+            'МР Южане');
     }
 }

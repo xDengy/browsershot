@@ -48,14 +48,20 @@ class JKSunHillsOlginka extends Command
 
     public function handle()
     {
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://crm.metriks.ru/shahmatki/agent/?filter-liter=16',
-            'ЖК Sun Hills Ольгинка', 'Литер 1', 'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://crm.metriks.ru/shahmatki/agent/?filter-liter=16',
+            'ЖК Sun Hills Ольгинка',
+            'Литер 1',
+            'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse('https://crm.metriks.ru/shahmatki/agent/?filter-liter=18',
-            'ЖК Sun Hills Ольгинка', 'Литер 4', 'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://crm.metriks.ru/shahmatki/agent/?filter-liter=18',
+            'ЖК Sun Hills Ольгинка',
+            'Литер 4',
+            'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'ЖК Sun Hills Ольгинка');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, 'public/xml/metriks:jkSunHillsOlginka');
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/metriks:jkSunHillsOlginka'));
     }
 }

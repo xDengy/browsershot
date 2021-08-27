@@ -48,8 +48,9 @@ class LeventsovkaPark extends Command
 
     public function handle()
     {
-        (new \App\Services\Parsers\ParseMagistratDon)->parse('https://magistrat-don.ru/object/leventsovka-park/',
-            'public/xml/magistrat-don:leventsovka-park',
+        (new \App\Services\Parsers\ParseMagistratDon)->parse(
+            'https://magistrat-don.ru/object/leventsovka-park/',
+            public_path('/xml/magistrat-don:leventsovka-park'),
             'Левенцовка парк');
     }
 }

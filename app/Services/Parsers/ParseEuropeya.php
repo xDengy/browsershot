@@ -14,19 +14,10 @@ class ParseEuropeya
     {
         $results = ArrayToXml::convert($arr, 'complexes');
 
-        $dom = new DOMDocument($results);
-
-        $dom->save($path . '.xml');
-
-        $contents = file_get_contents($path . '.xml');
-
-        $contents = str_replace("<?xml version='", '', $contents);
-        $contents = str_replace("'?>", '', $contents);
-
-        file_put_contents($path . '.xml', $contents);
+        file_put_contents($path . '.xml', $results);
     }
 
-    public function buildArray(array $array , $name)
+    public function buildArray(array $array, $name)
     {
         $arr['complex']['id'] = md5($name);
         $arr['complex']['name'] = $name;
@@ -95,7 +86,14 @@ class ParseEuropeya
             $flat['area'] = $body['AREA'];
             $flat['floor'] = $body['FLOOR'];
 
-            $flat['plan'] = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
+            $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
+
+            if ($img == '') {
+                $flat['plan'] = $img;
+            }
+            else {
+                $flat['plan'] = 'https://bitrix.europeya.ru' . $img;
+            }
 
             $jkArr['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
             $jkArr['complex']['buildings']['building'][$responseKey]['name'] = $name;

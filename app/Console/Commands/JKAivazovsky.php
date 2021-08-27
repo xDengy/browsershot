@@ -46,6 +46,9 @@ class JKAivazovsky extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('24070', 'ЖК Айвазовский', 'public/xml/neometria:Aivazovsky');
+        (new ParseNeometria)->parse(
+            '24070',
+            public_path('/xml/neometria:Aivazovsky'),
+            'ЖК Айвазовский');
     }
 }

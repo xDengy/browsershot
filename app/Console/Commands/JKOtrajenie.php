@@ -46,6 +46,9 @@ class JKOtrajenie extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('46956', 'ЖК Отражение', 'public/xml/neometria:Otrajenie');
+        (new ParseNeometria)->parse(
+            '46956',
+            public_path('/xml/neometria:Otrajenie'),
+            'ЖК Отражение');
     }
 }

@@ -48,9 +48,12 @@ class Marriott extends Command
 
     public function handle()
     {
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse('https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=241',
-            'Марриотт Гостиничный Комплекс', 'Апартаменты в составе комплекса', 'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
+        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+            'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=241',
+            'Марриотт Гостиничный Комплекс',
+            'Апартаменты в составе комплекса',
+            'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, 'public/xml/europeya:marriott');
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/europeya:marriott'));
     }
 }

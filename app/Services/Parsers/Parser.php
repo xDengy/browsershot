@@ -6,5 +6,5 @@ namespace App\Services\Parsers;
 
 interface Parser
 {
-    public function parse(string $link, string $path, string $name);
+    public function parse(string $link, string $path, string $complexName);
 }

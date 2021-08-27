@@ -46,6 +46,9 @@ class JKOblaka extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('59', 'ЖК Облака', 'public/xml/neometria:Oblaka');
+        (new ParseNeometria)->parse(
+            '59',
+            public_path('/xml/neometria:Oblaka'),
+            'ЖК Облака');
     }
 }

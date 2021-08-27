@@ -46,6 +46,9 @@ class JKSkazka extends Command
 
     public function handle()
     {
-        (new ParseNeometria)->parse('61', 'ЖК Сказка', 'public/xml/neometria:jkSkazka');
+        (new ParseNeometria)->parse(
+            '61',
+            public_path('/xml/neometria:jkSkazka'),
+            'ЖК Сказка');
     }
 }

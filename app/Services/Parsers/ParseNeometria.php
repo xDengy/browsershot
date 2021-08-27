@@ -8,14 +8,13 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParseNeometria
+class ParseNeometria implements Parser
 {
-
-    public function parse($complexID, $complexName, $path)
+    public function parse(string $link, string $path, string $complexName)
     {
         $client = new Client(['cookies' => true]);
 
-        $response = $client->get('https://neometria.ru/api/catalog/apartments?complexes[]=' . $complexID . '&scroll=1&page=1500');
+        $response = $client->get('https://neometria.ru/api/catalog/apartments?complexes[]=' . $link . '&scroll=1&page=1500');
 
         $jkArr ['complex']['id'] = md5($complexName);
         $jkArr ['complex']['name'] = $complexName;
@@ -38,7 +37,15 @@ class ParseNeometria
             $flat['price'] = $apartment['price'];
             $flat['area'] = $apartment['area'];
             $flat['floor'] = $apartment['floor'];
-            $flat['plan'] = $apartment['image'] ?? '';
+
+            $img = $apartment['image'] ?? '';
+
+            if ($img == '') {
+                $flat['plan'] = $img;
+            }
+            else {
+                $flat['plan'] = 'https://neometria.ru' . $img;
+            }
 
             $jkArr ['complex']['buildings']['building'][$responseKey]['id'] = md5($apartment['liter']);
             $jkArr ['complex']['buildings']['building'][$responseKey]['name'] = $apartment['liter'];
@@ -78,15 +85,6 @@ class ParseNeometria
 
         $results = ArrayToXml::convert($jkArr, 'complexes');
 
-        $dom = new DOMDocument($results);
-
-        $dom->save($path . '.xml');
-
-        $contents = file_get_contents($path . '.xml');
-
-        $contents = str_replace("<?xml version='", '', $contents);
-        $contents = str_replace("'?>", '', $contents);
-
-        file_put_contents($path . '.xml', $contents);
+        file_put_contents($path . '.xml', $results);
     }
 }

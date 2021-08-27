@@ -47,6 +47,8 @@ class FortAdmiral extends Command
     {
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/fort-admiral/',
-            'public/xml/imperialgorod:fort-admiral', 'Форт адмирал');
+            public_path('/xml/imperialgorod:fort-admiral'),
+            'Форт адмирал'
+        );
     }
 }
