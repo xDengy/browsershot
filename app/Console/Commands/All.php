@@ -87,6 +87,7 @@ class All extends Command
             $this->call($command);
         } catch (\Throwable $e) {
             $this->error($command);
+            $this->error($e->getMessage());
         }
     }
 }
