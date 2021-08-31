@@ -12,6 +12,8 @@ set('repository', 'git@github.com:falur/parser.azbuka.git');
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
 
+set('bin/php', '/usr/bin/php8.0');
+
 // Shared files/dirs between deploys
 add('shared_files', []);
 add('shared_dirs', []);
