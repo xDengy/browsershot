@@ -50,7 +50,7 @@ class MRUjane extends Command
 
         (new ParseNeometria)->parse(
             '62',
-            public_path('/xml/neometria:Ujane'),
+            public_path('/storage/xml/neometria:Ujane'),
             'МР Южане');
     }
 }

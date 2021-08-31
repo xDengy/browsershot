@@ -56,6 +56,6 @@ class Sograt extends Command
             'Сограт',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/europeya:sograt'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:sograt'));
     }
 }

@@ -70,6 +70,6 @@ class JKSunHills extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'ЖК Sun Hills');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/metriks:jkSunHills'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/metriks:jkSunHills'));
     }
 }

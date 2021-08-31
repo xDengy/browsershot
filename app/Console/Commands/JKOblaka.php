@@ -50,7 +50,7 @@ class JKOblaka extends Command
 
         (new ParseNeometria)->parse(
             '59',
-            public_path('/xml/neometria:Oblaka'),
+            public_path('/storage/xml/neometria:Oblaka'),
             'ЖК Облака');
     }
 }

@@ -51,7 +51,7 @@ class Levada extends Command
 
         (new ParseBauinvest)->parse(
             'https://sk-bauinvest.ru/zhilye-kompleksy/levada',
-            public_path('/xml/sk-bauinvest:levada'),
+            public_path('/storage/xml/sk-bauinvest:levada'),
             'ЖК Левада');
     }
 }

@@ -100,6 +100,6 @@ class JKSlavyanka extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'ЖК Славянка');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/metriks:jkSlavyanka'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/metriks:jkSlavyanka'));
     }
 }

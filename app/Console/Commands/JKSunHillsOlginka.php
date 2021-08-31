@@ -64,6 +64,6 @@ class JKSunHillsOlginka extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'ЖК Sun Hills Ольгинка');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/metriks:jkSunHillsOlginka'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/metriks:jkSunHillsOlginka'));
     }
 }

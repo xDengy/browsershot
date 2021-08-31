@@ -49,7 +49,7 @@ class Elegant extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/elegant/',
-            public_path('/xml/imperialgorod:elegant'),
+            public_path('/storage/xml/imperialgorod:elegant'),
             'Элегант');
     }
 }

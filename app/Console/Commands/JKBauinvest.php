@@ -51,7 +51,7 @@ class JKBauinvest extends Command
 
         (new ParseBauinvest)->parse(
             'https://sk-bauinvest.ru/zhilye-kompleksy/zhk-bauinvest',
-            public_path('/xml/sk-bauinvest:jkBauinvest'),
+            public_path('/storage/xml/sk-bauinvest:jkBauinvest'),
             'ЖК БАУИНВЕСТ');
     }
 }

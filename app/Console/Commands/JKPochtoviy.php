@@ -51,7 +51,7 @@ class JKPochtoviy extends Command
 
         (new ParseBauinvest)->parse(
             'https://sk-bauinvest.ru/zhilye-kompleksy/zhk-pochtoviy',
-            public_path('/xml/sk-bauinvest:jkPochtoviy'),
+            public_path('/storage/xml/sk-bauinvest:jkPochtoviy'),
             'ЖК ПОЧТОВЫЙ');
     }
 }

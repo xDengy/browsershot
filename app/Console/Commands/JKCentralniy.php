@@ -56,6 +56,6 @@ class JKCentralniy extends Command
             'Литер 1',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/metriks:jkCentralniy'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/metriks:jkCentralniy'));
     }
 }

@@ -50,7 +50,7 @@ class JKPerviy extends Command
 
         (new ParseNeometria)->parse(
             '60',
-            public_path('/xml/neometria:jkPerviy'),
+            public_path('/storage/xml/neometria:jkPerviy'),
             'ЖК Первый');
     }
 }

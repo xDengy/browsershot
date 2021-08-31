@@ -56,6 +56,6 @@ class ZeleniyTeatrJK extends Command
             'Литер 6',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/europeya:zeleniyTeatrJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:zeleniyTeatrJK'));
     }
 }

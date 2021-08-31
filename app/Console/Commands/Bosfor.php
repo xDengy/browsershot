@@ -49,7 +49,7 @@ class Bosfor extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/bosfor/',
-            public_path('/xml/imperialgorod:bosfor'),
+            public_path('/storage/xml/imperialgorod:bosfor'),
             'Босфор');
     }
 }

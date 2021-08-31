@@ -50,7 +50,7 @@ class JKMalina extends Command
 
         (new ParseNeometria)->parse(
             '5845',
-            public_path('/xml/neometria:Malina'),
+            public_path('/storage/xml/neometria:Malina'),
             'ЖК Малина');
     }
 }

@@ -71,6 +71,6 @@ class EuropeCityJK extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Европа-Сити ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/europeya:europeCityJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:europeCityJK'));
     }
 }

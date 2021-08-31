@@ -49,7 +49,7 @@ class SkazkaGrad extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/skazka-grad/',
-            public_path('/xml/imperialgorod:skazka-grad'),
+            public_path('/storage/xml/imperialgorod:skazka-grad'),
             'Сказка-град');
     }
 }

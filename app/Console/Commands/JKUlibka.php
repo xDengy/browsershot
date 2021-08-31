@@ -50,7 +50,7 @@ class JKUlibka extends Command
 
         (new ParseNeometria)->parse(
             '36410',
-            public_path('public/xml/neometria:Ulibka'),
+            public_path('/storage/public/xml/neometria:Ulibka'),
             'ЖК Улыбка');
     }
 }

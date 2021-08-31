@@ -49,7 +49,7 @@ class RodnyeProstory extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/rodnye-prostory/',
-            public_path('/xml/imperialgorod:rodnye-prostory'),
+            public_path('/storage/xml/imperialgorod:rodnye-prostory'),
             'Родные просторы');
     }
 }

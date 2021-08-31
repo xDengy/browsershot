@@ -94,6 +94,6 @@ class IspaniaJK extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Испания ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/europeya:ispaniaJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:ispaniaJK'));
     }
 }

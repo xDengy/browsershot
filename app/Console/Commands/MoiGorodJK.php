@@ -70,6 +70,6 @@ class MoiGorodJK extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Мой город ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/europeya:moiGorodJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:moiGorodJK'));
     }
 }

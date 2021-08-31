@@ -50,7 +50,7 @@ class JKSkazka extends Command
 
         (new ParseNeometria)->parse(
             '61',
-            public_path('/xml/neometria:jkSkazka'),
+            public_path('/storage/xml/neometria:jkSkazka'),
             'ЖК Сказка');
     }
 }

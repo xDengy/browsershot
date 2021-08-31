@@ -50,7 +50,7 @@ class BelyeRosy extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/belye-rosy/',
-            public_path('/xml/imperialgorod:belye-rosy'),
+            public_path('/storage/xml/imperialgorod:belye-rosy'),
             'Белые розы');
     }
 }

@@ -48,7 +48,7 @@ class Abrikosovo extends Command
 
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/abrikosovo/',
-            public_path('/xml/imperialgorod:abrikosovo'),
+            public_path('/storage/xml/imperialgorod:abrikosovo'),
             'Абрикосово'
         );
     }

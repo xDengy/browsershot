@@ -45,7 +45,6 @@ class ParserImperialgorod implements Parser
                     'name' => $complexName,
                     'buildings' => [],
                 ]
-
         ];
 
         foreach ($responses as $responseKey => $response) {

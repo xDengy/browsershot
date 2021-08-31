@@ -50,7 +50,7 @@ class JKAivazovsky extends Command
 
         (new ParseNeometria)->parse(
             '24070',
-            public_path('/xml/neometria:Aivazovsky'),
+            public_path('/storage/xml/neometria:Aivazovsky'),
             'ЖК Айвазовский');
     }
 }

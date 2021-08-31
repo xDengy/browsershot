@@ -154,6 +154,6 @@ class GermaniaJK extends Command
 
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Германия ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/xml/europeya:germaniaJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:germaniaJK'));
     }
 }

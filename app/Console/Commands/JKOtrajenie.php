@@ -50,7 +50,7 @@ class JKOtrajenie extends Command
 
         (new ParseNeometria)->parse(
             '46956',
-            public_path('/xml/neometria:Otrajenie'),
+            public_path('/storage/xml/neometria:Otrajenie'),
             'ЖК Отражение');
     }
 }

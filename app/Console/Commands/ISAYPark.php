@@ -56,6 +56,6 @@ class ISAYPark extends Command
             'Литер 1 Квартал 1',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/europeya:isayPark'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:isayPark'));
     }
 }

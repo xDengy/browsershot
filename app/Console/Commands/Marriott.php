@@ -56,6 +56,6 @@ class Marriott extends Command
             'Апартаменты в составе комплекса',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/xml/europeya:marriott'));
+        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:marriott'));
     }
 }
