@@ -208,16 +208,6 @@ const {isEmpty} = require("lodash/lang");
                 }
             }
 
-
-         for (let i = 0; i < changeArray['complexes']['complex']['buildings']['building'].length; i++) {
-             if ('apartment' in changeArray['complexes']['complex']['buildings']['building'][i]['flats']['flat']) {
-
-             }
-             else {
-                 changeArray['complexes']['complex']['buildings']['building'].splice(i, 1);
-             }
-         }
-
             return changeArray;
         }
     );
