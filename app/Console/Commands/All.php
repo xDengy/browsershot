@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class All extends Command
 {
@@ -88,6 +89,7 @@ class All extends Command
         } catch (\Throwable $e) {
             $this->error($command);
             $this->error($e->getMessage());
+            Log::info($e->getMessage(), $e->getTrace());
         }
     }
 }
