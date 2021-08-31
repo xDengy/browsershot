@@ -29,16 +29,7 @@ host('5.101.180.81')
     ->set('deploy_path', '/home/www/parser.azbuka-novostroek.com');
 
 // Tasks
-task('build', function () {
-    run('cd /home/www/parser.azbuka-novostroek.com && build');
-});
-
-task('restart:php-fpm', function () {
-    run('systemctl restart php7.4fpm');
-});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-
-after('deploy', 'restart:php-fpm');
 
