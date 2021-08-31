@@ -48,6 +48,8 @@ class JKSunHillsOlginka extends Command
 
     public function handle()
     {
+        $this->info('xml:metriks:jkSunHillsOlginka');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=16',
             'ЖК Sun Hills Ольгинка',

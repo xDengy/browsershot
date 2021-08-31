@@ -45,6 +45,8 @@ class FortAdmiral extends Command
 
     public function handle()
     {
+        $this->info('xml:imperialgorod:fort-admiral');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/fort-admiral/',
             public_path('/xml/imperialgorod:fort-admiral'),

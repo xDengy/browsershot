@@ -48,6 +48,8 @@ class JKCentralniy extends Command
 
     public function handle()
     {
+        $this->info('xml:metriks:jkCentralniy');
+
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=10',
             'ЖК Центральный',

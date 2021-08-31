@@ -46,6 +46,8 @@ class MRUjane extends Command
 
     public function handle()
     {
+        $this->info('xml:neometria:mrUjane');
+
         (new ParseNeometria)->parse(
             '62',
             public_path('/xml/neometria:Ujane'),

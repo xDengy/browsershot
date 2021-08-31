@@ -48,6 +48,8 @@ class MoiGorodJK extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:moiGorodJK');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=390',
             'Мой город ЖК',

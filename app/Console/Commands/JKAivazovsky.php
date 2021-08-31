@@ -46,6 +46,8 @@ class JKAivazovsky extends Command
 
     public function handle()
     {
+        $this->info('xml:neometria:jkAivazovsky');
+
         (new ParseNeometria)->parse(
             '24070',
             public_path('/xml/neometria:Aivazovsky'),

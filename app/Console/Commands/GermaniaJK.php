@@ -48,6 +48,8 @@ class GermaniaJK extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:germaniaJK');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=276',
             'Германия ЖК',

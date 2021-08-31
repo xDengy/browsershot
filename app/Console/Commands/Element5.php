@@ -48,6 +48,8 @@ class Element5 extends Command
 
     public function handle()
     {
+        $this->info('xml:magistrat-don:5-element');
+
         (new \App\Services\Parsers\ParseMagistratDon)->parse(
             'https://magistrat-don.ru/object/jk-5-element/',
             public_path('/xml/magistrat-don:5-element'),

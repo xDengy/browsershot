@@ -48,6 +48,8 @@ class JKSlavyanka extends Command
 
     public function handle()
     {
+        $this->info('xml:metriks:jkSlavyanka');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=19',
             'ЖК Славянка',

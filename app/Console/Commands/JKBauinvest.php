@@ -47,6 +47,8 @@ class JKBauinvest extends Command
 
     public function handle()
     {
+        $this->info('xml:sk-bauinvest:jkBauinvest');
+
         (new ParseBauinvest)->parse(
             'https://sk-bauinvest.ru/zhilye-kompleksy/zhk-bauinvest',
             public_path('/xml/sk-bauinvest:jkBauinvest'),

@@ -46,6 +46,8 @@ class JKUlibka extends Command
 
     public function handle()
     {
+        $this->info('xml:neometria:jkUlibka');
+
         (new ParseNeometria)->parse(
             '36410',
             public_path('public/xml/neometria:Ulibka'),

@@ -48,6 +48,8 @@ class ISAYPark extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:isayPark');
+
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=8',
             'ISAY - Парк',

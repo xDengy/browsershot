@@ -46,6 +46,8 @@ class BelyeRosy extends Command
 
     public function handle()
     {
+        $this->info('xml:imperialgorod:belye-rosy');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/belye-rosy/',
             public_path('/xml/imperialgorod:belye-rosy'),

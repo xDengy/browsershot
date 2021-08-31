@@ -46,6 +46,8 @@ class JKPerviy extends Command
 
     public function handle()
     {
+        $this->info('xml:neometria:jkPerviy');
+
         (new ParseNeometria)->parse(
             '60',
             public_path('/xml/neometria:jkPerviy'),

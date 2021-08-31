@@ -42,12 +42,14 @@ class Abrikosovo extends Command
      *
      * @return int
      */
-
     public function handle()
     {
+        $this->info('xml:imperialgorod:abrikosovo');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/abrikosovo/',
             public_path('/xml/imperialgorod:abrikosovo'),
-            'Абрикосово');
+            'Абрикосово'
+        );
     }
 }

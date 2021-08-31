@@ -45,6 +45,8 @@ class Striji extends Command
 
     public function handle()
     {
+        $this->info('xml:imperialgorod:striji');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/striji/',
             public_path('/xml/imperialgorod:striji'),

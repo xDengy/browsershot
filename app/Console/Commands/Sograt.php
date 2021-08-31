@@ -48,6 +48,8 @@ class Sograt extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:sograt');
+
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=3',
             'Сограт',

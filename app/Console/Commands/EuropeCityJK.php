@@ -48,6 +48,8 @@ class EuropeCityJK extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:europeCityJK');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=104',
             'Европа-Сити ЖК',

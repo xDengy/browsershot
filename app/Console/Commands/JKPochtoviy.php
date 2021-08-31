@@ -47,6 +47,8 @@ class JKPochtoviy extends Command
 
     public function handle()
     {
+        $this->info('xml:sk-bauinvest:jkPochtoviy');
+
         (new ParseBauinvest)->parse(
             'https://sk-bauinvest.ru/zhilye-kompleksy/zhk-pochtoviy',
             public_path('/xml/sk-bauinvest:jkPochtoviy'),

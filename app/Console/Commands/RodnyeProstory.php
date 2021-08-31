@@ -45,6 +45,8 @@ class RodnyeProstory extends Command
 
     public function handle()
     {
+        $this->info('xml:imperialgorod:rodnye-prostory');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/rodnye-prostory/',
             public_path('/xml/imperialgorod:rodnye-prostory'),

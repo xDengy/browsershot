@@ -37,47 +37,56 @@ class All extends Command
      */
     public function handle()
     {
-        $this->call('xml:imperialgorod:rodnye-prostory');
-        $this->call('xml:imperialgorod:elegant');
-        $this->call('xml:imperialgorod:abrikosovo');
-        $this->call('xml:imperialgorod:belye-rosy');
-        $this->call('xml:imperialgorod:bosfor');
-        $this->call('xml:imperialgorod:fort-admiral');
-        $this->call('xml:imperialgorod:skazka-grad');
-        $this->call('xml:imperialgorod:striji');
+        $this->tryToCall('xml:imperialgorod:rodnye-prostory');
+        $this->tryToCall('xml:imperialgorod:elegant');
+        $this->tryToCall('xml:imperialgorod:abrikosovo');
+        $this->tryToCall('xml:imperialgorod:belye-rosy');
+        $this->tryToCall('xml:imperialgorod:bosfor');
+        $this->tryToCall('xml:imperialgorod:fort-admiral');
+        $this->tryToCall('xml:imperialgorod:skazka-grad');
+        $this->tryToCall('xml:imperialgorod:striji');
 
-        $this->call('xml:magistrat-don:5-element');
-        $this->call('xml:magistrat-don:leventsovka-park');
+        $this->tryToCall('xml:magistrat-don:5-element');
+        $this->tryToCall('xml:magistrat-don:leventsovka-park');
 
-        $this->call('xml:europeya:sograt');
-        $this->call('xml:europeya:isayPark');
-        $this->call('xml:europeya:zeleniyTeatrJK');
-        $this->call('xml:europeya:portugaliaJK');
-        $this->call('xml:europeya:europeCityJK');
-        $this->call('xml:europeya:marriott');
-        $this->call('xml:europeya:germaniaJK');
-        $this->call('xml:europeya:ispaniaJK');
-        $this->call('xml:europeya:moiGorodJK');
+        $this->tryToCall('xml:europeya:sograt');
+        $this->tryToCall('xml:europeya:isayPark');
+        $this->tryToCall('xml:europeya:zeleniyTeatrJK');
+        $this->tryToCall('xml:europeya:portugaliaJK');
+        $this->tryToCall('xml:europeya:europeCityJK');
+        $this->tryToCall('xml:europeya:marriott');
+        $this->tryToCall('xml:europeya:germaniaJK');
+        $this->tryToCall('xml:europeya:ispaniaJK');
+        $this->tryToCall('xml:europeya:moiGorodJK');
 
-        $this->call('xml:metriks:jkKraski');
-        $this->call('xml:metriks:jkSlavyanka');
-        $this->call('xml:metriks:jkSunHillsOlginka');
-        $this->call('xml:metriks:jkCentralniy');
-        $this->call('xml:metriks:jkSunHills');
+        $this->tryToCall('xml:metriks:jkKraski');
+        $this->tryToCall('xml:metriks:jkSlavyanka');
+        $this->tryToCall('xml:metriks:jkSunHillsOlginka');
+        $this->tryToCall('xml:metriks:jkCentralniy');
+        $this->tryToCall('xml:metriks:jkSunHills');
 
-        $this->call('xml:neometria:mrUjane');
-        $this->call('xml:neometria:jkAivazovsky');
-        $this->call('xml:neometria:jkUlibka');
-        $this->call('xml:neometria:jkOtrajenie');
-        $this->call('xml:neometria:jkOblaka');
-        $this->call('xml:neometria:jkMalina');
-        $this->call('xml:neometria:jkPerviy');
-        $this->call('xml:neometria:jkSkazka');
+        $this->tryToCall('xml:neometria:mrUjane');
+        $this->tryToCall('xml:neometria:jkAivazovsky');
+        $this->tryToCall('xml:neometria:jkUlibka');
+        $this->tryToCall('xml:neometria:jkOtrajenie');
+        $this->tryToCall('xml:neometria:jkOblaka');
+        $this->tryToCall('xml:neometria:jkMalina');
+        $this->tryToCall('xml:neometria:jkPerviy');
+        $this->tryToCall('xml:neometria:jkSkazka');
 
-        $this->call('xml:sk-bauinvest:jkPochtoviy');
-        $this->call('xml:sk-bauinvest:jkBauinvest');
-        $this->call('xml:sk-bauinvest:levada');
+        $this->tryToCall('xml:sk-bauinvest:jkPochtoviy');
+        $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
+        $this->tryToCall('xml:sk-bauinvest:levada');
 
         return 0;
+    }
+
+    public function tryToCall(string $command)
+    {
+        try {
+            $this->call($command);
+        } catch (\Throwable $e) {
+            $this->error($command);
+        }
     }
 }

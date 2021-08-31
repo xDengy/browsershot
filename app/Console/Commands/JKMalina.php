@@ -46,6 +46,8 @@ class JKMalina extends Command
 
     public function handle()
     {
+        $this->info('xml:neometria:jkMalina');
+
         (new ParseNeometria)->parse(
             '5845',
             public_path('/xml/neometria:Malina'),

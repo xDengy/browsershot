@@ -48,6 +48,8 @@ class IspaniaJK extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:ispaniaJK');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=377',
             'Испания ЖК',

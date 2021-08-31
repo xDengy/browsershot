@@ -48,6 +48,8 @@ class Marriott extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:marriott');
+
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=241',
             'Марриотт Гостиничный Комплекс',

@@ -48,6 +48,8 @@ class PortugaliaJK extends Command
 
     public function handle()
     {
+        $this->info('xml:europeya:portugaliaJK');
+
         $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=37',
             'Португалия ЖК',

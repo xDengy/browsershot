@@ -45,6 +45,8 @@ class SkazkaGrad extends Command
 
     public function handle()
     {
+        $this->info('xml:imperialgorod:skazka-grad');
+
         (new \App\Services\Parsers\ParserImperialgorod)->parse(
             'https://www.imperialgorod.ru/proekty/skazka-grad/',
             public_path('/xml/imperialgorod:skazka-grad'),

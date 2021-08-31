@@ -48,6 +48,8 @@ class JKKraski extends Command
 
     public function handle()
     {
+        $this->info('xml:metriks:jkKraski');
+
         $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=21',
             'ЖК Краски',
