@@ -13,6 +13,7 @@ set('repository', 'git@github.com:falur/parser.azbuka.git');
 set('git_tty', true);
 
 set('bin/php', '/usr/bin/php8.0');
+set('bin/composer', 'php8.0 /usr/bin/composer');
 
 // Shared files/dirs between deploys
 add('shared_files', []);
