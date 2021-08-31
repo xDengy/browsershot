@@ -16,6 +16,8 @@
         "postcss": "^8.1.14"
     },
     "dependencies": {
-        "puppeteer": "^10.2.0"
+        "md5": "^2.3.0",
+        "puppeteer": "^10.2.0",
+        "xml-js": "^1.6.11"
     }
 }
