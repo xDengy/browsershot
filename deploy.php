@@ -42,7 +42,3 @@ after('deploy:failed', 'deploy:unlock');
 
 after('deploy', 'restart:php-fpm');
 
-
-// Migrate database before symlink new release.
-before('deploy:symlink', 'artisan:migrate');
-
