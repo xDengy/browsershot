@@ -97,11 +97,13 @@ class ParseMagistratDon implements Parser
                     if ($sortArr ['complex']['buildings']['building'][$key]['name']
                         == $sortArr ['complex']['buildings']['building'][$newKey]['name']) {
 
+                        $jkArr ['complex']['buildings']['building'][$key]['id'] =
+                            $sortArr ['complex']['buildings']['building'][$key]['id'];
+
+
                         $jkArr ['complex']['buildings']['building'][$key]['name'] =
                             $sortArr ['complex']['buildings']['building'][$key]['name'];
 
-                        $jkArr ['complex']['buildings']['building'][$key]['id'] =
-                            $sortArr ['complex']['buildings']['building'][$key]['id'];
 
                         $jkArr ['complex']['buildings']['building'][$key]['flats']['flat'][] =
                             $sortArr ['complex']['buildings']['building'][$newKey]['flats']['flat'][0];

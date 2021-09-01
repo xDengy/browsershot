@@ -79,6 +79,14 @@ class All extends Command
         $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
         $this->tryToCall('xml:sk-bauinvest:levada');
 
+
+        $this->tryToCall('xml:DSN:timoshenko');
+
+        $this->tryToCall('xml:KSM:RIIJTskiyUyut');
+
+        $this->tryToCall('xml:donstroy:jkZvezdniy2');
+        $this->tryToCall('xml:donstroy:jkTreeSkvera');
+
         return 0;
     }
 
