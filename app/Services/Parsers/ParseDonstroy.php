@@ -80,6 +80,7 @@ class ParseDonstroy
 
                 $area = $node->filter('.area')->text();
                 $area = explode(' ', $area)[1];
+                $area = str_replace(',', '.', $area);
 
                 $price = '-';
 

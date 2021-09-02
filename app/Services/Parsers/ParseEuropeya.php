@@ -80,25 +80,27 @@ class ParseEuropeya
 
             $flat = [];
 
-            $flat['apartment'] = $body['NUM'];
-            $flat['rooms'] = str_replace(' комнатная', '', $body['ROOMTEXT']);
-            $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
-            $flat['area'] = $body['AREA'];
-            $flat['floor'] = $body['FLOOR'];
+            if ($body['TYPETEXT'] == 'Квартира') {
 
-            $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
+                $flat['apartment'] = $body['NUM'];
+                $flat['rooms'] = str_replace(' к.', '', $body['ROOMTEXT']);
+                $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
+                $flat['area'] = $body['AREA'];
+                $flat['floor'] = $body['FLOOR'];
 
-            if ($img == '') {
-                $flat['plan'] = $img;
+                $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
+
+                if ($img == '') {
+                    $flat['plan'] = $img;
+                } else {
+                    $flat['plan'] = explode('/shahmatki', $link)[0] . $img;
+                }
+
+                $jkArr['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
+                $jkArr['complex']['buildings']['building'][$responseKey]['name'] = $name;
+
+                $jkArr['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
             }
-            else {
-                $flat['plan'] = 'https://bitrix.europeya.ru' . $img;
-            }
-
-            $jkArr['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
-            $jkArr['complex']['buildings']['building'][$responseKey]['name'] = $name;
-
-            $jkArr['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
         }
 
         foreach ($jkArr['complex']['buildings']['building'] as $firstKey => $firstValue) {

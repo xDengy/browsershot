@@ -47,7 +47,7 @@ class JKTreeSkvera extends Command
 
     public function handle()
     {
-        $this->info('xml:donstroy:jkZvezdniy2');
+        $this->info('xml:donstroy:jkTreeSkvera');
 
         $arr[] = (new ParseDonstroy)->parse(
             'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-tri-skvera/31-dom/1-pod-ezd.html',

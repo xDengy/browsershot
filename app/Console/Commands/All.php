@@ -79,7 +79,6 @@ class All extends Command
         $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
         $this->tryToCall('xml:sk-bauinvest:levada');
 
-
         $this->tryToCall('xml:DSN:timoshenko');
 
         $this->tryToCall('xml:KSM:RIIJTskiyUyut');
