@@ -42,8 +42,8 @@ class ParserImperialgorod implements Parser
         $newBody = [
             'complex' =>
                 ['id' => md5($complexName),
-                    'name' => $complexName,
-                    'buildings' => [],
+                 'name' => $complexName,
+                 'buildings' => [],
                 ]
         ];
 

@@ -24,11 +24,8 @@ class ParseBauinvest implements Parser
             $crawler->filter('.spare__chess')->each(function (Crawler $node, $i) {
                 return [
                     'id' => $node->filter('.spare__chessRoom-free')->each(function (Crawler $node, $i) {
-                        try {
-                            $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
-                        } catch (\Throwable $e) {
-                            return;
-                        }
+
+                        $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
 
                         $crawler = new Crawler($href);
 
@@ -43,11 +40,8 @@ class ParseBauinvest implements Parser
 
                     'name' =>
                         $node->filter('.spare__chessRoom-free')->each(function (Crawler $node, $i) {
-                            try {
-                                $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
-                            } catch (\Throwable $e) {
-                                return;
-                            }
+
+                            $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
 
                             $crawler = new Crawler($href);
 
@@ -61,11 +55,8 @@ class ParseBauinvest implements Parser
                         })[0],
 
                     'flats' => ['flat' => $node->filter('.spare__chessRoom-free')->each(function (Crawler $node, $i) {
-                        try {
-                            $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
-                        } catch (\Throwable $e) {
-                            return;
-                        }
+
+                        $href = file_get_contents('https://sk-bauinvest.ru' . $node->attr('href'));
 
                         $crawler = new Crawler($href);
 
