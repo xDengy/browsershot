@@ -40,7 +40,6 @@ class ParseBauinvest implements Parser
 
                         $flat['apartment'] = $node->attr('data-num');
                         $flat['rooms'] = $node->attr('data-rooms');
-                        $flat['price'] = $node->attr('data-cost-total');
                         $flat['price'] = str_replace(' ₽', '', $node->attr('data-cost-total'));
                         $flat['area'] = str_replace('"', '', $node->attr('data-area-full'));
 
