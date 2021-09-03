@@ -39,7 +39,6 @@ class All extends Command
     public function handle()
     {
         $this->tryToCall('xml:alfastroyinvest:all');
-
         $this->tryToCall('xml:imperialgorod:rodnye-prostory');
         $this->tryToCall('xml:imperialgorod:elegant');
         $this->tryToCall('xml:imperialgorod:abrikosovo');
@@ -48,10 +47,8 @@ class All extends Command
         $this->tryToCall('xml:imperialgorod:fort-admiral');
         $this->tryToCall('xml:imperialgorod:skazka-grad');
         $this->tryToCall('xml:imperialgorod:striji');
-
         $this->tryToCall('xml:magistrat-don:5-element');
         $this->tryToCall('xml:magistrat-don:leventsovka-park');
-
         $this->tryToCall('xml:europeya:sograt');
         $this->tryToCall('xml:europeya:isayPark');
         $this->tryToCall('xml:europeya:zeleniyTeatrJK');
@@ -61,13 +58,11 @@ class All extends Command
         $this->tryToCall('xml:europeya:germaniaJK');
         $this->tryToCall('xml:europeya:ispaniaJK');
         $this->tryToCall('xml:europeya:moiGorodJK');
-
         $this->tryToCall('xml:metriks:jkKraski');
         $this->tryToCall('xml:metriks:jkSlavyanka');
         $this->tryToCall('xml:metriks:jkSunHillsOlginka');
         $this->tryToCall('xml:metriks:jkCentralniy');
         $this->tryToCall('xml:metriks:jkSunHills');
-
         $this->tryToCall('xml:neometria:mrUjane');
         $this->tryToCall('xml:neometria:jkAivazovsky');
         $this->tryToCall('xml:neometria:jkUlibka');
@@ -76,15 +71,11 @@ class All extends Command
         $this->tryToCall('xml:neometria:jkMalina');
         $this->tryToCall('xml:neometria:jkPerviy');
         $this->tryToCall('xml:neometria:jkSkazka');
-
         $this->tryToCall('xml:sk-bauinvest:jkPochtoviy');
         $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
         $this->tryToCall('xml:sk-bauinvest:levada');
-
         $this->tryToCall('xml:DSN:timoshenko');
-
         $this->tryToCall('xml:KSM:RIIJTskiyUyut');
-
         $this->tryToCall('xml:donstroy:jkZvezdniy2');
         $this->tryToCall('xml:donstroy:jkTreeSkvera');
 
