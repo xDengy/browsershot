@@ -13,8 +13,9 @@ class ParseMagistratDon implements Parser
     public function parse (string $link, string $path, string $complexName)
     {
 
-        $crawler = new Crawler(Browsershot::url($link)
-            ->bodyHtml());
+        $crawler = new Crawler(
+            Browsershot::url($link)->windowSize(1920, 1080)->bodyHtml()
+        );
 
         $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $complexName)  {
 
