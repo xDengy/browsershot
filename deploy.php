@@ -22,14 +22,18 @@ add('shared_dirs', []);
 // Writable dirs by web server
 add('writable_dirs', []);
 
-
 // Hosts
 host('5.101.180.81')
     ->user('root')
     ->set('deploy_path', '/home/www/parser.azbuka-novostroek.com');
 
 // Tasks
+task('npm:install', function () {
+    run('cd {{release_path}} && npm install');
+});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
+
+after('deploy', 'npm:install');
 
