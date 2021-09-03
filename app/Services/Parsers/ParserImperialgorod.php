@@ -23,22 +23,6 @@ class ParserImperialgorod implements Parser
 
         $client = new Client(['cookies' => true]);
 
-        $responses = [];
-
-        foreach ($ids as $idKey => $id) {
-
-            $responses[] = $client->post('https://www.imperialgorod.ru/api/estateChess/', [
-                'form_params' => [
-                    'building' => $id,
-                ],
-            ]);
-        }
-
-        $liter = $crawler->filter('.chess__building-text')->each(function (Crawler $node, $i) {
-
-            return $node->text();
-        });
-
         $newBody = [
             'complex' =>
                 ['id' => md5($complexName),
@@ -47,97 +31,43 @@ class ParserImperialgorod implements Parser
                 ]
         ];
 
-        foreach ($responses as $responseKey => $response) {
+        foreach ($ids as $id) {
+            $res = $client->post('https://www.imperialgorod.ru/api/estateChess/', [
+                'form_params' => [
+                    'building' => $id,
+                ],
+            ]);
 
-            $newBody ['complex']['buildings']['building'][$responseKey] = [
-                'id' => '',
-                'name' => '',
-            ];
+            $liter = $crawler->filter('.chess__building-text')->each(function (Crawler $node, $i) {
 
-            $body = $response->getBody();
-            $body = json_decode((string)$body, true);
+                return $node->text();
+            });
 
-            $newBody ['complex']['buildings']['building'][$responseKey]['id'] = md5($liter[$responseKey]);
-            $newBody ['complex']['buildings']['building'][$responseKey]['name'] = $liter[$responseKey];
+            $res = json_decode($res->getBody()->getContents(), true);
+            $buildings = ['building' => []];
 
-            $sections = $body['data']['sections'];
-            foreach ($sections as $secKey => $section) {
+            foreach ($res['data']['sections'] as $section) {
+                $building = [];
+                $building['name'] = $section['name'];
+                $building['id'] = md5($section['name']);
+                $building['flats'] = ['flat' => []];
 
-                $floors = $section['floors'];
-
-                foreach ($floors as $floorKey => $floor) {
-
-                    $flats = $floor['flats'];
-
-                    foreach ($flats as $flatKey => $flat) {
-
-                        if ($flat['booked'] == 1) {
-
-                            unset($body['data']['sections'][$secKey]['floors'][$floorKey]['flats'][$flatKey]);
-                        } else {
-
-                            if ($flat['sold'] == 1) {
-
-                                unset($body['data']['sections'][$secKey]['floors'][$floorKey]['flats'][$flatKey]);
-
-                                if ($body['data']['sections'][$secKey]['floors'][$floorKey]['flats'] == []) {
-                                    unset($body['data']['sections'][$secKey]['floors'][$floorKey]);
-                                }
-                            }
+                foreach ($section['floors'] as $floorNumber => $floor) {
+                    foreach ($floor['flats'] as $apartment) {
+                        if ($apartment['sold'] || $apartment['booked']) {
+                            continue;
                         }
 
-                        $body['data']['sections'][$secKey]['floors'][$floorKey]['flats'] = array_values($body['data']['sections'][$secKey]['floors'][$floorKey]['flats']);
+                        $building['flats']['flat'][] = [
+                            'apartment' => $apartment['number'],
+                            'rooms'     => $apartment['rooms'],
+                            'flat'      => $floorNumber,
+                            'price'     => $apartment['price'],
+                        ];
                     }
                 }
-            }
 
-            foreach ($sections as $secKey => $section) {
-
-                $floors = $section['floors'];
-
-                foreach ($floors as $floorKey => $floor) {
-
-                    $flats = $floor['flats'];
-
-                    foreach ($flats as $flatKey => $flat) {
-
-                        if ($flat['booked'] == 1 || $flat['sold'] == 1) {
-
-                            unset($body['data']['sections'][$secKey]['floors'][$floorKey]['flats'][$flatKey]);
-
-                        } else {
-
-                            $href = file_get_contents('https://www.imperialgorod.ru' . $flat['href']);
-
-                            $crawler = new Crawler($href);
-
-                            $src = $crawler->filter('.flat__image')->each(function (Crawler $node, $i) {
-                                return $node->filter('img')->each(function (Crawler $node, $i) {
-                                    return $node->attr('src');
-                                });
-                            });
-
-                            $newFlat = [];
-
-                            $newFlat['apartment'] = $flat['number'];
-                            $newFlat['room'] = $flat['rooms'];
-                            $newFlat['price'] = str_replace('&nbsp;₽', '', $flat['price']);
-                            $newFlat['area'] = str_replace('&nbsp;м²', '', $flat['area']);
-                            $newFlat['floor'] = $floorKey + 1;
-
-                            if ($src[0][0] == '') {
-                                $newFlat['plan'] = $src[0][0];
-                            }
-                            else {
-                                $newFlat['plan'] = 'https://www.imperialgorod.ru' . $src[0][0];
-                            }
-
-                            $newBody ['complex']['buildings']['building'][$responseKey]['flats']['flat'][] =
-                                $newFlat;
-                        }
-
-                    }
-                }
+                $buildings['building'][] = $building;
             }
         }
 
