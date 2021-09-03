@@ -38,6 +38,8 @@ class All extends Command
      */
     public function handle()
     {
+        $this->tryToCall('xml:alfastroyinvest:all');
+
         $this->tryToCall('xml:imperialgorod:rodnye-prostory');
         $this->tryToCall('xml:imperialgorod:elegant');
         $this->tryToCall('xml:imperialgorod:abrikosovo');

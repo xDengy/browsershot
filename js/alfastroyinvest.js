@@ -57,6 +57,7 @@ async function build(frame, number) {
 
     // Выбрать ЖК
     await frame.click('.main-ui-filter-block:nth-of-type(2) .ui-tile-selector-selector-wrap');
+    await frame.waitForTimeout(500);
     await frame.click('.popup-window > div > div > div > div:nth-of-type('+number+') [data-entity-type="DEPARTMENTS"]');
     await frame.click('.flex-filter-front .ui-btn-icon-search');
 
@@ -68,7 +69,7 @@ async function build(frame, number) {
     console.log('Выбрал ЖК', complex.name);
 
     // Дождаться загрузки плитки
-    await frame.waitForTimeout(3000);
+    await frame.waitForTimeout(6000);
     //await frame.waitForSelector('.tiles-house-section-floor-offer-rooms');
 
     console.log('Плитка загрузилась');
@@ -118,8 +119,9 @@ async function build(frame, number) {
     let result = convert.js2xml(complexes, options);
 
     fs.writeFileSync(
+        __dirname + '/../public/storage/xml/alfastroyinvest:' +
         trans().transform(complex.name, '-').toLowerCase() + '.xml',
-        result
+        '<?xml version="1.0" encoding="UTF-8" ?>\n' + result
     );
 
     console.log('finish', complex.name);
