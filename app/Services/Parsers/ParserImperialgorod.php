@@ -31,7 +31,7 @@ class ParserImperialgorod implements Parser
                 ]
         ];
 
-        foreach ($ids as $id) {
+        foreach ($ids as $idKey => $id) {
             $res = $client->post('https://www.imperialgorod.ru/api/estateChess/', [
                 'form_params' => [
                     'building' => $id,
@@ -44,12 +44,13 @@ class ParserImperialgorod implements Parser
             });
 
             $res = json_decode($res->getBody()->getContents(), true);
+
             $buildings = ['building' => []];
+            $building['id'] = md5($liter[$idKey]);
+            $building['name'] = $liter[$idKey];
 
             foreach ($res['data']['sections'] as $section) {
                 $building = [];
-                $building['name'] = $section['name'];
-                $building['id'] = md5($section['name']);
                 $building['flats'] = ['flat' => []];
 
                 foreach ($section['floors'] as $floorNumber => $floor) {
