@@ -61,14 +61,10 @@ class ParseDonstroy
 
         $data['complex']['buildings']['building'][0]['flats']['flat'] =
             $crawler->filter('.span3')->each(function (Crawler $node, $i) use ($data) {
-
                 $apartment = $node->filter('a[itemprop="url"]')->text();
                 $apartment = explode(' ', $apartment)[1];
 
                 $img = 'https://donstroy.biz' . $node->filter('img[itemprop="thumbnailUrl"]')->attr('src');
-
-                $floor = $node->filter('a[itemprop="genre"]')->text();
-                $floor = explode(' ', $floor)[0];
 
                 $rooms = $node->filter('.korpus')->text();
                 $rooms = explode(' ', $rooms)[0];
@@ -84,7 +80,6 @@ class ParseDonstroy
                     'room' => $rooms,
                     'price' => $price,
                     'area' => $area,
-                    'floor' => $floor,
                     'plan' => $img,
                 ];
             });
