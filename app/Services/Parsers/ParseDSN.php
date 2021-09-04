@@ -23,36 +23,23 @@ class ParseDSN implements Parser
         $info = explode(' [', $href[0]);
         $info = explode(']', $info[1]);
 
-        $jkArr['complex']['id'] = md5($complexName);
-        $jkArr['complex']['name'] = $complexName;
+        $data['complex']['id'] = md5($complexName);
+        $data['complex']['name'] = $complexName;
 
-        $jkArr['complex']['buildings']['building'][0]['id'] = md5('Тимошенко улица,5а');
-        $jkArr['complex']['buildings']['building'][0]['name'] = 'Тимошенко улица,5а';
+        $data['complex']['buildings']['building'][0]['id'] = md5('Тимошенко улица,5а');
+        $data['complex']['buildings']['building'][0]['name'] = 'Тимошенко улица,5а';
 
         $arr = [];
 
         for ($i = 1; $i <= $info[0]; $i++) {
-
             $html = file_get_contents('https://dsn-1.ru/services/197/?&city=0&order=1&direction=&mlspage=' . $i . '#obj');
-
             $crawler = new Crawler($html);
 
-            $arr[] = $crawler->filter('div[style="padding:5px"]')->each(function (Crawler $node, $i) use ($jkArr) {
-
+            $arr[] = $crawler->filter('div[style="padding:5px"]')->each(function (Crawler $node, $i) use ($data) {
                 $href = $node->filter('a')->attr('href');
-                $html = file_get_contents('https://dsn-1.ru' . $href);
-                $crawler = new Crawler($html);
 
                 $apartment = explode('cn=', $href)[1];
                 $apartment = explode('&', $apartment)[0];
-
-                $floor = $crawler->filter('table[style="vertical-align:top;"]')->each(function (Crawler $node, $i) {
-                    return $node->filter('td')->each(function (Crawler $node, $i) {
-                        return $node->text();
-                    });
-                });
-
-                $floor = explode('/', $floor[0][2])[0];
 
                 $img = $node->filter('.img-responsive')->attr('src');
 
@@ -73,23 +60,19 @@ class ParseDSN implements Parser
                     'room' => $rooms,
                     'price' => $price,
                     'area' => $area,
-                    'floor' => $floor,
                     'plan' => 'https://dsn-1.ru' . $img,
                 ];
             });
 
         }
 
-        foreach ($arr as $key => $value) {
-            foreach ($value as $k => $v) {
-
-                $jkArr['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
-
+        foreach ($arr as $value) {
+            foreach ($value as $v) {
+                $data['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
             }
         }
 
-        $results = ArrayToXml::convert($jkArr, 'complexes');
-
+        $results = ArrayToXml::convert($data, 'complexes');
         file_put_contents($path . '.xml', $results);
     }
 }

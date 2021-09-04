@@ -13,7 +13,6 @@ class ParseDonstroy
     public function createXML(array $arr, $path)
     {
         $results = ArrayToXml::convert($arr, 'complexes');
-
         file_put_contents($path . '.xml', $results);
     }
 
@@ -23,7 +22,6 @@ class ParseDonstroy
         $arr['complex']['name'] = $name;
 
         foreach ($array as $key => $item) {
-
             $arr['complex']['buildings']['building'][] = $array[$key]['complex']['buildings']['building'][0] ??
                 $array[$key]['complex']['buildings']['building'];
         }
@@ -37,12 +35,10 @@ class ParseDonstroy
         $arr['complex']['buildings']['building'][0]['name'] = $name;
 
         foreach ($array as $key => $item) {
-
             $arr['complex']['buildings']['building'][0]['flats']['flat'][] = $array[$key]['complex']['buildings']['building'][0]['flats']['flat'];
         }
 
         foreach ($arr['complex']['buildings']['building'] as $key => $item) {
-
             $arr['complex']['buildings']['building'][0]['flats']['flat'] = array_merge(
                 $arr['complex']['buildings']['building'][$key]['flats']['flat'][0],
                 $arr['complex']['buildings']['building'][$key]['flats']['flat'][1]
@@ -55,17 +51,16 @@ class ParseDonstroy
     public function parse(string $link, string $complexName, string $sectionName)
     {
         $html = file_get_contents($link);
-
         $crawler = new Crawler($html);
 
-        $jkArr['complex']['id'] = md5($complexName);
-        $jkArr['complex']['name'] = $complexName;
+        $data['complex']['id'] = md5($complexName);
+        $data['complex']['name'] = $complexName;
 
-        $jkArr['complex']['buildings']['building'][0]['id'] = md5($sectionName);
-        $jkArr['complex']['buildings']['building'][0]['name'] = $sectionName;
+        $data['complex']['buildings']['building'][0]['id'] = md5($sectionName);
+        $data['complex']['buildings']['building'][0]['name'] = $sectionName;
 
-        $jkArr['complex']['buildings']['building'][0]['flats']['flat'] =
-            $crawler->filter('.span3')->each(function (Crawler $node, $i) use ($jkArr) {
+        $data['complex']['buildings']['building'][0]['flats']['flat'] =
+            $crawler->filter('.span3')->each(function (Crawler $node, $i) use ($data) {
 
                 $apartment = $node->filter('a[itemprop="url"]')->text();
                 $apartment = explode(' ', $apartment)[1];
@@ -94,6 +89,6 @@ class ParseDonstroy
                 ];
             });
 
-        return $jkArr;
+        return $data;
     }
 }

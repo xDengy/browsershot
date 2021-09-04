@@ -13,7 +13,6 @@ class ParseEuropeya
     public function createXML(array $arr, $path)
     {
         $results = ArrayToXml::convert($arr, 'complexes');
-
         file_put_contents($path . '.xml', $results);
     }
 
@@ -23,23 +22,10 @@ class ParseEuropeya
         $arr['complex']['name'] = $name;
 
         foreach ($array as $key => $item) {
-
             $arr['complex']['buildings']['building'][] = $array[$key]['complex']['buildings']['building'][0] ??
                 $array[$key]['complex']['buildings']['building'];
         }
 
-        /*
-         * foreach ($arr['complex']['buildings']['building'] as $key => $item) {
-
-            if ($arr['complex']['buildings']['building'][$key] == null) {
-                unset($arr['complex']['buildings']['building'][$key]);
-            }
-        }
-
-        $arr['complex']['buildings']['building'] =
-            array_values($arr['complex']['buildings']['building']);
-
-         */
         return $arr;
     }
 
@@ -82,10 +68,10 @@ class ParseEuropeya
 
             $flat = [];
 
-            if ($body['TYPETEXT'] == 'Квартира') {
+            if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '') {
 
                 $flat['apartment'] = $body['NUM'];
-                $flat['rooms'] = str_replace(' к.', '', $body['ROOMTEXT']);
+                $flat['rooms'] = explode(' ', $body['ROOMTEXT'])[0];
                 $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
                 $flat['area'] = $body['AREA'];
 
@@ -106,22 +92,18 @@ class ParseEuropeya
 
         foreach ($data['complex']['buildings']['building'] as $firstKey => $firstValue) {
             foreach ($data['complex']['buildings']['building'] as $secondKey => $secondValue) {
-
                 $data['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
                     $data['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
             }
+
+            sort($data['complex']['buildings']['building'][$firstKey]['flats']['flat']);
+
+            $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
+                array_unique($data['complex']['buildings']['building'][$firstKey]['flats']['flat'], SORT_REGULAR);
+
+            $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
+                array_values($data['complex']['buildings']['building'][$firstKey]['flats']['flat']);
         }
-
-        foreach ($data['complex']['buildings']['building'] as $sortKey => $sortValue) {
-            sort($data['complex']['buildings']['building'][$sortKey]['flats']['flat']);
-        }
-
-        $data['complex']['buildings']['building'] =
-            array_unique($data['complex']['buildings']['building'], SORT_REGULAR);
-
-        $data['complex']['buildings']['building'] =
-            array_values($data['complex']['buildings']['building']);
-
 
         return $data;
     }
