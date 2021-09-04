@@ -28,7 +28,8 @@ class ParseEuropeya
                 $array[$key]['complex']['buildings']['building'];
         }
 
-        foreach ($arr['complex']['buildings']['building'] as $key => $item) {
+        /*
+         * foreach ($arr['complex']['buildings']['building'] as $key => $item) {
 
             if ($arr['complex']['buildings']['building'][$key] == null) {
                 unset($arr['complex']['buildings']['building'][$key]);
@@ -38,6 +39,7 @@ class ParseEuropeya
         $arr['complex']['buildings']['building'] =
             array_values($arr['complex']['buildings']['building']);
 
+         */
         return $arr;
     }
 
@@ -55,7 +57,7 @@ class ParseEuropeya
 
         $responses = [];
 
-        foreach ($ids as $idKey => $id) {
+        foreach ($ids as $id) {
 
             if ($id == '') {
                 unset($id);
@@ -70,9 +72,9 @@ class ParseEuropeya
             }
         }
 
-        $jkArr['complex']['id'] = md5($complexName);
-        $jkArr['complex']['name'] = $complexName;
-        $jkArr['complex']['buildings']['building'] = [];
+        $data['complex']['id'] = md5($complexName);
+        $data['complex']['name'] = $complexName;
+        $data['complex']['buildings']['building'] = [];
 
         foreach ($responses as $responseKey => $response) {
             $body = $response->getBody();
@@ -86,7 +88,6 @@ class ParseEuropeya
                 $flat['rooms'] = str_replace(' к.', '', $body['ROOMTEXT']);
                 $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
                 $flat['area'] = $body['AREA'];
-                $flat['floor'] = $body['FLOOR'];
 
                 $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
 
@@ -96,34 +97,32 @@ class ParseEuropeya
                     $flat['plan'] = explode('/shahmatki', $link)[0] . $img;
                 }
 
-                $jkArr['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
-                $jkArr['complex']['buildings']['building'][$responseKey]['name'] = $name;
+                $data['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
+                $data['complex']['buildings']['building'][$responseKey]['name'] = $name;
 
-                $jkArr['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
+                $data['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
             }
         }
 
-        foreach ($jkArr['complex']['buildings']['building'] as $firstKey => $firstValue) {
-            foreach ($jkArr['complex']['buildings']['building'] as $secondKey => $secondValue) {
+        foreach ($data['complex']['buildings']['building'] as $firstKey => $firstValue) {
+            foreach ($data['complex']['buildings']['building'] as $secondKey => $secondValue) {
 
-                if ($jkArr['complex']['buildings']['building'][$firstKey]['name']
-                    == $jkArr['complex']['buildings']['building'][$secondKey]['name']) {
-
-                    $jkArr['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
-                        $jkArr['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
-                }
-                $jkArr['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                    array_unique($jkArr['complex']['buildings']['building'][$firstKey]['flats']['flat'], SORT_REGULAR);
-
-                $jkArr['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                    array_values($jkArr['complex']['buildings']['building'][$firstKey]['flats']['flat']);
+                $data['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
+                    $data['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
             }
         }
 
-        foreach ($jkArr['complex']['buildings']['building'] as $sortKey => $sortValue) {
-            sort($jkArr['complex']['buildings']['building'][$sortKey]['flats']['flat']);
+        foreach ($data['complex']['buildings']['building'] as $sortKey => $sortValue) {
+            sort($data['complex']['buildings']['building'][$sortKey]['flats']['flat']);
         }
 
-        return $jkArr;
+        $data['complex']['buildings']['building'] =
+            array_unique($data['complex']['buildings']['building'], SORT_REGULAR);
+
+        $data['complex']['buildings']['building'] =
+            array_values($data['complex']['buildings']['building']);
+
+
+        return $data;
     }
 }
