@@ -51,7 +51,7 @@ class ParserImperialgorod implements Parser
             $data['complex']['buildings']['building'][$idKey]['name'] = $liter[$idKey];
 
             foreach ($res['data']['sections'] as $section) {
-                foreach ($section['floors'] as $floorNumber => $floor) {
+                foreach ($section['floors'] as $floor) {
                     foreach ($floor['flats'] as $apartment) {
                         if ($apartment['sold'] || $apartment['booked']) {
                             continue;

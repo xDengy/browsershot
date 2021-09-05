@@ -12,6 +12,12 @@ class ParseEuropeya
 {
     public function createXML(array $arr, $path)
     {
+        foreach ($arr['complex']['buildings']['building'] as $key => $item) {
+            if ($arr['complex']['buildings']['building'][$key] == null) {
+                unset($arr['complex']['buildings']['building'][$key]);
+            }
+        }
+
         $results = ArrayToXml::convert($arr, 'complexes');
         file_put_contents($path . '.xml', $results);
     }
@@ -68,7 +74,7 @@ class ParseEuropeya
 
             $flat = [];
 
-            if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '') {
+            if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '' || $body['TYPETEXT'] == 'Апартаменты') {
 
                 $flat['apartment'] = $body['NUM'];
                 $flat['rooms'] = explode(' ', $body['ROOMTEXT'])[0];
@@ -95,14 +101,13 @@ class ParseEuropeya
                 $data['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
                     $data['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
             }
+        }
 
-            sort($data['complex']['buildings']['building'][$firstKey]['flats']['flat']);
+        $data['complex']['buildings']['building'] = array_values($data['complex']['buildings']['building']);
 
-            $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                array_unique($data['complex']['buildings']['building'][$firstKey]['flats']['flat'], SORT_REGULAR);
-
-            $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                array_values($data['complex']['buildings']['building'][$firstKey]['flats']['flat']);
+        if (count($data['complex']['buildings']['building']) > 1) {
+            $data['complex']['buildings']['building'] =
+                $data['complex']['buildings']['building'][0];
         }
 
         return $data;
