@@ -4,7 +4,18 @@ declare(strict_types=1);
 
 namespace App\Services\Parsers;
 
-interface Parser
+use Spatie\ArrayToXml\ArrayToXml;
+
+abstract class Parser
 {
-    public function parse(string $link, string $path, string $complexName);
+    abstract public function parse(string $link, string $path, string $complexName);
+
+    protected function save(array $data, string $path)
+    {
+        $results = (new ArrayToXml($data, 'complexes', true, 'UTF-8'))
+            ->prettify()
+            ->toXml();
+
+        file_put_contents($path . '.xml', $results);
+    }
 }

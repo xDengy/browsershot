@@ -8,7 +8,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParseDSN implements Parser
+class ParseDSN extends Parser
 {
     public function parse(string $link, string $path, string $complexName)
     {
@@ -63,7 +63,6 @@ class ParseDSN implements Parser
                     'plan' => 'https://dsn-1.ru' . $img,
                 ];
             });
-
         }
 
         foreach ($arr as $value) {
@@ -72,7 +71,6 @@ class ParseDSN implements Parser
             }
         }
 
-        $results = ArrayToXml::convert($data, 'complexes');
-        file_put_contents($path . '.xml', $results);
+        $this->save($data, $path);
     }
 }

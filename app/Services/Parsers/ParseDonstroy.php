@@ -12,7 +12,10 @@ class ParseDonstroy
 {
     public function createXML(array $arr, $path)
     {
-        $results = ArrayToXml::convert($arr, 'complexes');
+        $results = (new ArrayToXml($arr, 'complexes', true, 'UTF-8'))
+            ->prettify()
+            ->toXml();
+
         file_put_contents($path . '.xml', $results);
     }
 

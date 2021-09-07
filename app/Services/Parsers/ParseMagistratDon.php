@@ -8,7 +8,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
-class ParseMagistratDon implements Parser
+class ParseMagistratDon extends Parser
 {
     public function parse(string $link, string $path, string $complexName)
     {
@@ -113,12 +113,8 @@ class ParseMagistratDon implements Parser
             $data['complex']['buildings']['building'] =
                 array_values($data['complex']['buildings']['building']);
 
-            $results = ArrayToXml::convert($data, 'complexes');
-
-            file_put_contents($path . '.xml', $results);
+            $this->save($data, $path);
         });
-
-
     }
 
 }
