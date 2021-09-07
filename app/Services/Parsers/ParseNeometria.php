@@ -25,7 +25,17 @@ class ParseNeometria extends Parser
 
         $flat = [];
 
-        foreach ($body['apartments'] as $responseKey => $apartment) {
+        $crawler = new Crawler(
+            Browsershot::url('https://neometria.ru/catalog/?complexes=[' . $link . ']')->bodyHtml()
+        );
+
+        $liters = $crawler->filter('.optionContainer')->each(function (Crawler $node, $i) {
+            return $node->filter('._1qPfmP7Js2zG_IF5R0J3Un')->each(function (Crawler $node, $i) {
+               return $node->text();
+            });
+        });
+
+        foreach ($body['apartments'] as $apartment) {
 
             $title = explode('№ ', $apartment['title']);
 
@@ -36,6 +46,7 @@ class ParseNeometria extends Parser
             $flat['rooms'] = $title[0];
             $flat['price'] = $apartment['price'];
             $flat['area'] = $apartment['area'];
+            $flat['liter'] = $apartment['liter'];
 
             $img = $apartment['image'] ?? '';
 
@@ -46,38 +57,22 @@ class ParseNeometria extends Parser
                 $flat['plan'] = 'https://neometria.ru' . $img;
             }
 
-            $data['complex']['buildings']['building'][$responseKey]['id'] = md5($apartment['liter']);
-            $data['complex']['buildings']['building'][$responseKey]['name'] = $apartment['liter'];
-
-            $data['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
-
+            $flats[] = $flat;
         }
 
-        foreach ($data['complex']['buildings']['building'] as $firstKey => $firstValue) {
-            foreach ($data['complex']['buildings']['building'] as $secondKey => $secondValue) {
-                if ($data['complex']['buildings']['building'][$firstKey]['name']
-                    == $data['complex']['buildings']['building'][$secondKey]['name']) {
-                    $data['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
-                        $data['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
+        foreach ($flats as $item) {
+            foreach ($liters[1] as $k => $v) {
+                if ($v == $item['liter']) {
+                    $data['complex']['buildings']['building'][$k]['id'] = md5($v);
+                    $data['complex']['buildings']['building'][$k]['name'] = $v;
+
+                    unset($item['liter']);
+                    $data['complex']['buildings']['building'][$k]['flats']['flat'][] = $item;
+
+                    break;
                 }
-
-                $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                    array_unique($data['complex']['buildings']['building'][$firstKey]['flats']['flat'], SORT_REGULAR);
-
-                $data['complex']['buildings']['building'][$firstKey]['flats']['flat'] =
-                    array_values($data['complex']['buildings']['building'][$firstKey]['flats']['flat']);
             }
         }
-
-        foreach ($data['complex']['buildings']['building'] as $sortKey => $sortValue) {
-            sort($data['complex']['buildings']['building'][$sortKey]['flats']['flat']);
-        }
-
-        $data['complex']['buildings']['building'] =
-            array_unique($data['complex']['buildings']['building'], SORT_REGULAR);
-
-        $data['complex']['buildings']['building'] =
-            array_values($data['complex']['buildings']['building']);
 
         $this->save($data, $path);
     }

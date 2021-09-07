@@ -13,21 +13,20 @@ class ParseMagistratDon extends Parser
     public function parse(string $link, string $path, string $complexName)
     {
         $crawler = new Crawler(
-            Browsershot::url($link)->windowSize(1920, 1080)->bodyHtml()
+            Browsershot::url($link)->bodyHtml()
         );
 
-        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $complexName) {
+        $names = $crawler->filter('#korpus')->each(function (Crawler $node, $i) {
+            return $node->filter('option')->each(function (Crawler $node, $i) {
+                return $node->text();
+            });
+        });
 
-            $newBody = [
-                'complexes' =>
-                    ['complex' =>
-                        [
-                            'buildings' => [],
-                        ]
-                    ]
-            ];
+        unset($names[0][0]);
 
-            $arr = $node->filter('tr')->each(function (Crawler $node, $i) use ($newBody) {
+        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $names, $complexName) {
+
+            $arr = $node->filter('tr')->each(function (Crawler $node, $i) use ($names) {
                 $text = $node->filter('td')->each(function (Crawler $node, $i) {
                     return $node->text();
                 });
@@ -38,20 +37,13 @@ class ParseMagistratDon extends Parser
                 $number = str_replace('"', '', $info[4]);
                 $img = str_replace('"', '', $info[9]);
 
-                $newBody ['complex']['buildings']['building'][] = [
-                    'id' => '',
-                    'name' => '',
-                ];
-
-                $newBody ['complex']['buildings']['building'][0]['id'] = md5($text[0]);
-                $newBody ['complex']['buildings']['building'][0]['name'] = $text[0];
-
                 $newFlat = [];
 
                 $newFlat['apartment'] = $number;
                 $newFlat['room'] = $text[3];
                 $newFlat['price'] = $text[5];
                 $newFlat['area'] = $text[4];
+                $newFlat['name'] = $text[0];
 
                 if ($img == '') {
                     $newFlat['plan'] = $img;
@@ -59,59 +51,24 @@ class ParseMagistratDon extends Parser
                     $newFlat['plan'] = 'https://magistrat-don.ru' . $img;
                 }
 
-                $newBody ['complex']['buildings']['building'][0]['flats']['flat'][] =
-                    $newFlat;
-
-                return $newBody;
+                return $newFlat;
             });
-
-            $sortArr = [];
-            $data = [];
 
             $data['complex']['id'] = md5($complexName);
             $data['complex']['name'] = $complexName;
 
             foreach ($arr as $item) {
-                foreach ($arr as $newKey => $newItem) {
-                    if ($item ['complex']['buildings']['building'][0]['name'] ==
-                        $newItem ['complex']['buildings']['building'][0]['name']) {
+                foreach ($names[0] as $k => $v) {
+                    if ($v == $item['name']) {
+                        $data['complex']['buildings']['building'][$k]['id'] = md5($v);
+                        $data['complex']['buildings']['building'][$k]['name'] = $v;
 
-                        $sortArr['complex']['buildings']['building'][$newKey] = $newItem ['complex']['buildings']['building'][0];
-
-                        unset($newItem);
-                        $arr = array_values($arr);
+                        unset($item['name']);
+                        $data['complex']['buildings']['building'][$k]['flats']['flat'][] = $item;
+                        break;
                     }
                 }
             }
-
-            $sortArr['complex']['buildings']['building'] = array_values($sortArr['complex']['buildings']['building']);
-
-            foreach ($sortArr['complex']['buildings']['building'] as $key => $value) {
-                foreach ($sortArr['complex']['buildings']['building'] as $newKey => $item) {
-
-                    if ($sortArr['complex']['buildings']['building'][$key]['name']
-                        == $sortArr['complex']['buildings']['building'][$newKey]['name']) {
-
-                        $data['complex']['buildings']['building'][$key]['id'] =
-                            $sortArr['complex']['buildings']['building'][$key]['id'];
-
-
-                        $data['complex']['buildings']['building'][$key]['name'] =
-                            $sortArr['complex']['buildings']['building'][$key]['name'];
-
-
-                        $data['complex']['buildings']['building'][$key]['flats']['flat'][] =
-                            $sortArr['complex']['buildings']['building'][$newKey]['flats']['flat'][0];
-
-                    }
-                }
-            }
-
-            $data['complex']['buildings']['building'] =
-                array_unique($data['complex']['buildings']['building'], SORT_REGULAR);
-
-            $data['complex']['buildings']['building'] =
-                array_values($data['complex']['buildings']['building']);
 
             $this->save($data, $path);
         });

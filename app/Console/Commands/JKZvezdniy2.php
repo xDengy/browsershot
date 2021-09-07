@@ -50,32 +50,34 @@ class JKZvezdniy2 extends Command
         $this->info('xml:donstroy:jkZvezdniy2');
 
         $arr[] = (new ParseDonstroy)->parse(
-            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/sektsiya-1.html',
+            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/',
             'ЖК Звездный-2', '4 этап');
+        /*
+                $arr[] = (new ParseDonstroy)->parse(
+                    'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/sektsiya-2.html',
+                    'ЖК Звездный-2', '4 этап');
 
-        $arr[] = (new ParseDonstroy)->parse(
-            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/sektsiya-2.html',
-            'ЖК Звездный-2', '4 этап');
+                         *
+                        $arr1[] = (new ParseDonstroy)->parse(
+                            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-1.html',
+                            'ЖК Звездный-2', '3 этап');
 
-        $arr1[] = (new ParseDonstroy)->parse(
-            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-1.html',
-            'ЖК Звездный-2', '3 этап');
+                        $arr1[] = (new ParseDonstroy)->parse(
+                            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-2.html',
+                            'ЖК Звездный-2', '3 этап');
 
-        $arr1[] = (new ParseDonstroy)->parse(
-            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-2.html',
-            'ЖК Звездный-2', '3 этап');
+                        $build = (new ParseDonstroy)->buildArray(
+                            $arr,
+                            '4 этап');
 
-        $build = (new ParseDonstroy)->buildArray(
-            $arr,
-            '4 этап');
+                        $build1 = (new ParseDonstroy)->buildArray(
+                            $arr1,
+                            '3 этап');
 
-        $build1 = (new ParseDonstroy)->buildArray(
-            $arr1,
-            '3 этап');
-
-        $fullBuild = (new ParseDonstroy)->buildAllArrays(
-            [$build, $build1],
-            'ЖК Звездный-2');
+                        $fullBuild = (new ParseDonstroy)->buildAllArrays(
+                            [$build, $build1],
+                            'ЖК Звездный-2');
+                         */
 
         (new ParseDonstroy)->createXML(
             $fullBuild,

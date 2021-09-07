@@ -23,11 +23,11 @@ class ParseDSN extends Parser
         $info = explode(' [', $href[0]);
         $info = explode(']', $info[1]);
 
-        $data['complex']['id'] = md5($complexName);
-        $data['complex']['name'] = $complexName;
+        $data['complexes']['complex']['id'] = md5($complexName);
+        $data['complexes']['complex']['name'] = $complexName;
 
-        $data['complex']['buildings']['building'][0]['id'] = md5('Тимошенко улица,5а');
-        $data['complex']['buildings']['building'][0]['name'] = 'Тимошенко улица,5а';
+        $data['complexes']['complex']['buildings']['building'][0]['id'] = md5('Тимошенко улица,5а');
+        $data['complexes']['complex']['buildings']['building'][0]['name'] = 'Тимошенко улица,5а';
 
         $arr = [];
 
@@ -46,11 +46,11 @@ class ParseDSN extends Parser
                 $rooms = $node->filter('.titleObj')->text();
                 $rooms = explode(' ', $rooms)[0];
 
-                $area = $node->filter('.op1')->each(function (Crawler $node, $i) {
+                $op = $node->filter('.op1')->each(function (Crawler $node, $i) {
                     return $node->text();
                 });
 
-                $area = explode('/', $area[3])[0];
+                $area = explode('/', $op[3])[0];
 
                 $price = $node->filter('.price')->text();
                 $price = explode(' ', $price)[0];
@@ -67,7 +67,7 @@ class ParseDSN extends Parser
 
         foreach ($arr as $value) {
             foreach ($value as $v) {
-                $data['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
+                $data['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
             }
         }
 

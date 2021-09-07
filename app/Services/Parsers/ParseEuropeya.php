@@ -18,7 +18,6 @@ class ParseEuropeya
             }
         }
 
-
         $results = (new ArrayToXml($arr, 'complexes', true, 'UTF-8'))
             ->prettify()
             ->toXml();
@@ -79,7 +78,6 @@ class ParseEuropeya
             $flat = [];
 
             if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '' || $body['TYPETEXT'] == 'Апартаменты') {
-
                 $flat['apartment'] = $body['NUM'];
                 $flat['rooms'] = explode(' ', $body['ROOMTEXT'])[0];
                 $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
@@ -93,25 +91,11 @@ class ParseEuropeya
                     $flat['plan'] = explode('/shahmatki', $link)[0] . $img;
                 }
 
-                $data['complex']['buildings']['building'][$responseKey]['id'] = md5($name);
-                $data['complex']['buildings']['building'][$responseKey]['name'] = $name;
+                $data['complex']['buildings']['building'][0]['id'] = md5($name);
+                $data['complex']['buildings']['building'][0]['name'] = $name;
 
-                $data['complex']['buildings']['building'][$responseKey]['flats']['flat'][] = $flat;
+                $data['complex']['buildings']['building'][0]['flats']['flat'][] = $flat;
             }
-        }
-
-        foreach ($data['complex']['buildings']['building'] as $firstKey => $firstValue) {
-            foreach ($data['complex']['buildings']['building'] as $secondKey => $secondValue) {
-                $data['complex']['buildings']['building'][$firstKey]['flats']['flat'][] =
-                    $data['complex']['buildings']['building'][$secondKey]['flats']['flat'][0];
-            }
-        }
-
-        $data['complex']['buildings']['building'] = array_values($data['complex']['buildings']['building']);
-
-        if (count($data['complex']['buildings']['building']) > 1) {
-            $data['complex']['buildings']['building'] =
-                $data['complex']['buildings']['building'][0];
         }
 
         return $data;

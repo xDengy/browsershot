@@ -68,7 +68,6 @@ class EuropeCityJK extends Command
             'Литер 2 Квартал 6 ЕС 2 очередь',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-
         $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Европа-Сити ЖК');
 
         (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:europeCityJK'));

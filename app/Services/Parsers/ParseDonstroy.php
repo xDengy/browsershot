@@ -34,21 +34,20 @@ class ParseDonstroy
 
     public function buildArray(array $array, $name)
     {
-        $arr['complex']['buildings']['building'][0]['id'] = md5($name);
-        $arr['complex']['buildings']['building'][0]['name'] = $name;
+        $data['complex']['buildings']['building'][0]['id'] = md5($name);
+        $data['complex']['buildings']['building'][0]['name'] = $name;
 
         foreach ($array as $key => $item) {
-            $arr['complex']['buildings']['building'][0]['flats']['flat'][] = $array[$key]['complex']['buildings']['building'][0]['flats']['flat'];
+            $arr[] = $array[$key]['complex']['buildings']['building'][0]['flats']['flat'];
         }
 
-        foreach ($arr['complex']['buildings']['building'] as $key => $item) {
-            $arr['complex']['buildings']['building'][0]['flats']['flat'] = array_merge(
-                $arr['complex']['buildings']['building'][$key]['flats']['flat'][0],
-                $arr['complex']['buildings']['building'][$key]['flats']['flat'][1]
-            );
+        foreach ($arr as $value) {
+            foreach ($value as $v) {
+                $data['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
+            }
         }
 
-        return $arr;
+        return $data;
     }
 
     public function parse(string $link, string $complexName, string $sectionName)
