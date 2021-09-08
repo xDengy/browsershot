@@ -46,7 +46,7 @@ class Abrikosovo extends Command
     {
         $this->info('xml:imperialgorod:abrikosovo');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/abrikosovo/',
             public_path('/storage/xml/imperialgorod:abrikosovo'),
             'Абрикосово'

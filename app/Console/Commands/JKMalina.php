@@ -48,7 +48,7 @@ class JKMalina extends Command
     {
         $this->info('xml:neometria:jkMalina');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '5845',
             public_path('/storage/xml/neometria:Malina'),
             'ЖК Малина');

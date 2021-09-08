@@ -50,12 +50,12 @@ class ISAYPark extends Command
     {
         $this->info('xml:europeya:isayPark');
 
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=8',
             'ISAY - Парк',
             'Литер 1 Квартал 1',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:isayPark'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($building, public_path('/storage/xml/europeya:isayPark'));
     }
 }

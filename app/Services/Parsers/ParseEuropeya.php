@@ -10,14 +10,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ParseEuropeya
 {
-    public function createXML(array $arr, $path)
+    public function save(array $arr, $path)
     {
-        foreach ($arr['complex']['buildings']['building'] as $key => $item) {
-            if ($arr['complex']['buildings']['building'][$key] == null) {
-                unset($arr['complex']['buildings']['building'][$key]);
-            }
-        }
-
         $results = (new ArrayToXml($arr, 'complexes', true, 'UTF-8'))
             ->prettify()
             ->toXml();
@@ -25,20 +19,21 @@ class ParseEuropeya
         file_put_contents($path . '.xml', $results);
     }
 
-    public function buildArray(array $array, $name)
+    public function complex(array $buildings)
     {
-        $arr['complex']['id'] = md5($name);
-        $arr['complex']['name'] = $name;
+        $data = array_shift($buildings);
 
-        foreach ($array as $key => $item) {
-            $arr['complex']['buildings']['building'][] = $array[$key]['complex']['buildings']['building'][0] ??
-                $array[$key]['complex']['buildings']['building'];
+        foreach ($buildings as $entrance) {
+            $data['complex']['buildings']['building'] = array_merge(
+                data_get($data, 'complex.buildings.building'),
+                data_get($entrance, 'complex.buildings.building'),
+            );
         }
 
-        return $arr;
+        return $data;
     }
 
-    public function parse($link, $complexName, $name, $post)
+    public function building($link, $complexName, $name, $post)
     {
         $html = file_get_contents($link);
 
@@ -53,7 +48,6 @@ class ParseEuropeya
         $responses = [];
 
         foreach ($ids as $id) {
-
             if ($id == '') {
                 unset($id);
                 $ids = array_values($ids);
@@ -67,11 +61,25 @@ class ParseEuropeya
             }
         }
 
-        $data['complex']['id'] = md5($complexName);
-        $data['complex']['name'] = $complexName;
-        $data['complex']['buildings']['building'] = [];
+        $data = [
+            'complex' => [
+                'id' => md5($complexName),
+                'name' => $complexName,
+                'buildings' => [
+                    'building' => [
+                        [
+                            'id' => md5($name),
+                            'name' => $name,
+                            'flats' => [
+                                'flat' => []
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
 
-        foreach ($responses as $responseKey => $response) {
+        foreach ($responses as $response) {
             $body = $response->getBody();
             $body = json_decode((string)$body, true);
 
@@ -80,7 +88,7 @@ class ParseEuropeya
             if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '' || $body['TYPETEXT'] == 'Апартаменты') {
                 $flat['apartment'] = $body['NUM'];
                 $flat['rooms'] = explode(' ', $body['ROOMTEXT'])[0];
-                $flat['price'] = str_replace(' ₽', '', $body['PRICEALL']);
+                $flat['price'] = preg_replace('#[^0-9\.\,]+#', '', $body['PRICEALL']);
                 $flat['area'] = $body['AREA'];
 
                 $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';
@@ -90,9 +98,6 @@ class ParseEuropeya
                 } else {
                     $flat['plan'] = explode('/shahmatki', $link)[0] . $img;
                 }
-
-                $data['complex']['buildings']['building'][0]['id'] = md5($name);
-                $data['complex']['buildings']['building'][0]['name'] = $name;
 
                 $data['complex']['buildings']['building'][0]['flats']['flat'][] = $flat;
             }

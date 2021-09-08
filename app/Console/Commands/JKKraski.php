@@ -50,50 +50,50 @@ class JKKraski extends Command
     {
         $this->info('xml:metriks:jkKraski');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=21',
             'ЖК Краски',
             'Литер 5',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=13',
             'ЖК Краски',
             'Литер 2',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=17',
             'ЖК Краски',
             'Литер 8',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=3',
             'ЖК Краски',
             'Литер 4',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=11',
             'ЖК Краски',
             'Литер 7',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=2',
             'ЖК Краски',
             'Литер 3',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=1',
             'ЖК Краски',
             'Литер 1',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'ЖК Краски');
+        $complex = (new \App\Services\Parsers\ParseEuropeya)->complex($building);
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/metriks:jkKraski'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($complex, public_path('/storage/xml/metriks:jkKraski'));
     }
 }

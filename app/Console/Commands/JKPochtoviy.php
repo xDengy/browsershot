@@ -49,7 +49,7 @@ class JKPochtoviy extends Command
     {
         $this->info('xml:sk-bauinvest:jkPochtoviy');
 
-        (new ParseBauinvest)->parse(
+        (new ParseBauinvest)->complex(
             'https://sk-bauinvest.ru/zhilye-kompleksy/zhk-pochtoviy',
             public_path('/storage/xml/sk-bauinvest:jkPochtoviy'),
             'ЖК ПОЧТОВЫЙ');

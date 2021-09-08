@@ -50,26 +50,26 @@ class MoiGorodJK extends Command
     {
         $this->info('xml:europeya:moiGorodJK');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=390',
             'Мой город ЖК',
             'Литер 5 Квартал 3',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=391',
             'Мой город ЖК',
             'Литер 3 Квартал 3',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $arr[] = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building[] = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=392',
             'Мой город ЖК',
             'Литер 7 Квартал 3',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        $newArr = (new \App\Services\Parsers\ParseEuropeya)->buildArray($arr, 'Мой город ЖК');
+        $complex = (new \App\Services\Parsers\ParseEuropeya)->complex($building, 'Мой город ЖК');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($newArr, public_path('/storage/xml/europeya:moiGorodJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($complex, public_path('/storage/xml/europeya:moiGorodJK'));
     }
 }

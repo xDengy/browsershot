@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ParserImperialgorod extends Parser
 {
-    public function parse(string $link, string $path, string $complexName)
+    public function complex(string $link, string $path, string $complexName)
     {
         $html = file_get_contents($link);
         $crawler = new Crawler($html);
@@ -23,12 +23,12 @@ class ParserImperialgorod extends Parser
 
         $data = [
             'complex' => [
-                    'id'        => md5($complexName),
-                    'name'      => $complexName,
-                    'buildings' => [
-                            'building' => [],
-                        ],
+                'id' => md5($complexName),
+                'name' => $complexName,
+                'buildings' => [
+                    'building' => [],
                 ],
+            ],
         ];
 
         foreach ($ids as $idKey => $id) {
@@ -71,10 +71,10 @@ class ParserImperialgorod extends Parser
 
                         $building['flats']['flat'][] = [
                             'apartment' => $apartment['number'],
-                            'rooms'     => $apartment['rooms'],
-                            'area'      => preg_replace('#[^0-9\.]+#', '', $apartment['area']),
-                            'price'     => preg_replace('#[^0-9\.]+#', '', $apartment['price']),
-                            'plan'      => $img ?? '',
+                            'rooms' => $apartment['rooms'],
+                            'area' => preg_replace('#[^0-9\.]+#', '', $apartment['area']),
+                            'price' => preg_replace('#[^0-9\.]+#', '', $apartment['price']),
+                            'plan' => $img ?? '',
                         ];
                     }
                 }

@@ -47,7 +47,7 @@ class Bosfor extends Command
     {
         $this->info('xml:imperialgorod:bosfor');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/bosfor/',
             public_path('/storage/xml/imperialgorod:bosfor'),
             'Босфор');

@@ -47,7 +47,7 @@ class RodnyeProstory extends Command
     {
         $this->info('xml:imperialgorod:rodnye-prostory');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/rodnye-prostory/',
             public_path('/storage/xml/imperialgorod:rodnye-prostory'),
             'Родные просторы');

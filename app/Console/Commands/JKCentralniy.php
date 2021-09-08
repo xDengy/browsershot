@@ -50,12 +50,12 @@ class JKCentralniy extends Command
     {
         $this->info('xml:metriks:jkCentralniy');
 
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://crm.metriks.ru/shahmatki/agent/?filter-liter=10',
             'ЖК Центральный',
             'Литер 1',
             'https://crm.metriks.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/metriks:jkCentralniy'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($building, public_path('/storage/xml/metriks:jkCentralniy'));
     }
 }

@@ -62,29 +62,28 @@ class ParseDonstroy
                             'id' => md5($sectionName),
                             'name' => $sectionName,
                             'flats' => [
-                                'flat' => $crawler->filter('.span3')->each(function (Crawler $node, $i) {
-                                    $apartment = $node->filter('a[itemprop="url"]')->text();
-                                    $apartment = explode(' ', $apartment)[1];
+                                'flat' =>
+                                    $crawler->filter('.span3')->each(function (Crawler $node, $i) {
+                                        $apartment = $node->filter('a[itemprop="url"]')->text();
+                                        $apartment = preg_replace('#[^0-9\.\,]+#', '', $apartment);;
 
-                                    $img = 'https://donstroy.biz' . $node->filter('img[itemprop="thumbnailUrl"]')->attr('src');
+                                        $img = 'https://donstroy.biz' . $node->filter('.item-image a')->attr('href');
 
-                                    $rooms = $node->filter('.korpus')->text();
-                                    $rooms = explode(' ', $rooms)[0];
+                                        $rooms = $node->filter('.korpus')->text();
+                                        $rooms = preg_replace('#[^0-9\.\,]+#', '', $rooms);
+                                        $area = $node->filter('.area')->text();
+                                        $area = preg_replace('#[^0-9\.\,]+#', '', $area);
 
-                                    $area = $node->filter('.area')->text();
-                                    $area = explode(' ', $area)[1];
-                                    $area = str_replace(',', '.', $area);
+                                        $price = '';
 
-                                    $price = '';
-
-                                    return [
-                                        'apartment' => $apartment,
-                                        'room' => $rooms,
-                                        'price' => $price,
-                                        'area' => $area,
-                                        'plan' => $img,
-                                    ];
-                                }),
+                                        return [
+                                            'apartment' => $apartment,
+                                            'room' => $rooms,
+                                            'price' => $price,
+                                            'area' => $area,
+                                            'plan' => $img,
+                                        ];
+                                    }),
                             ]
                         ]
                     ]

@@ -48,7 +48,7 @@ class JKOtrajenie extends Command
     {
         $this->info('xml:neometria:jkOtrajenie');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '46956',
             public_path('/storage/xml/neometria:Otrajenie'),
             'ЖК Отражение');

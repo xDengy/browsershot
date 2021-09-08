@@ -47,7 +47,7 @@ class Elegant extends Command
     {
         $this->info('xml:imperialgorod:elegant');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/elegant/',
             public_path('/storage/xml/imperialgorod:elegant'),
             'Элегант');

@@ -8,7 +8,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 
 abstract class Parser
 {
-    abstract public function parse(string $link, string $path, string $complexName);
+    abstract public function complex(string $link, string $path, string $complexName);
 
     protected function save(array $data, string $path)
     {

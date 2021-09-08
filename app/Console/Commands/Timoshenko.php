@@ -47,7 +47,7 @@ class Timoshenko extends Command
     {
         $this->info('xml:DSN:timoshenko');
 
-        (new ParseDSN)->parse(
+        (new ParseDSN)->complex(
             'https://dsn-1.ru/services/197/',
             public_path('/storage/xml/DSN:timoshenko'),
             'ЖК Тимошенко');

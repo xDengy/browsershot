@@ -48,7 +48,7 @@ class JKSkazka extends Command
     {
         $this->info('xml:neometria:jkSkazka');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '61',
             public_path('/storage/xml/neometria:jkSkazka'),
             'ЖК Сказка');

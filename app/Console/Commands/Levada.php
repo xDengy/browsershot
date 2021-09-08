@@ -49,7 +49,7 @@ class Levada extends Command
     {
         $this->info('xml:sk-bauinvest:levada');
 
-        (new ParseBauinvest)->parse(
+        (new ParseBauinvest)->complex(
             'https://sk-bauinvest.ru/zhilye-kompleksy/levada',
             public_path('/storage/xml/sk-bauinvest:levada'),
             'ЖК Левада');

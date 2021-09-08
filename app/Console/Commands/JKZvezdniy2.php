@@ -49,39 +49,31 @@ class JKZvezdniy2 extends Command
     {
         $this->info('xml:donstroy:jkZvezdniy2');
 
-        $arr[] = (new ParseDonstroy)->parse(
-            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/',
+        $buildings = [];
+
+        $entrances = [];
+        $entrances[] = (new ParseDonstroy)->entrance(
+            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/sektsiya-1.html',
             'ЖК Звездный-2', '4 этап');
-        /*
-                $arr[] = (new ParseDonstroy)->parse(
-                    'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/4-etap/sektsiya-2.html',
-                    'ЖК Звездный-2', '4 этап');
+        $entrances[] = (new ParseDonstroy)->entrance(
+            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-1.html',
+            'ЖК Звездный-2', '4 этап');
+        $buildings[] = (new ParseDonstroy)->building($entrances);
 
-                         *
-                        $arr1[] = (new ParseDonstroy)->parse(
-                            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-1.html',
-                            'ЖК Звездный-2', '3 этап');
+        $entrances = [];
+        $entrances[] = (new ParseDonstroy)->entrance(
+            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-1.html',
+            'ЖК Звездный-2', '3 этап');
+        $entrances[] = (new ParseDonstroy)->entrance(
+            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-2.html',
+            'ЖК Звездный-2', '3 этап');
+        $buildings[] = (new ParseDonstroy)->building($entrances);
 
-                        $arr1[] = (new ParseDonstroy)->parse(
-                            'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-zvezdnyj-2/3-etap/sektsiya-2.html',
-                            'ЖК Звездный-2', '3 этап');
+        $complex = (new ParseDonstroy)->complex($buildings);
 
-                        $build = (new ParseDonstroy)->buildArray(
-                            $arr,
-                            '4 этап');
-
-                        $build1 = (new ParseDonstroy)->buildArray(
-                            $arr1,
-                            '3 этап');
-
-                        $fullBuild = (new ParseDonstroy)->buildAllArrays(
-                            [$build, $build1],
-                            'ЖК Звездный-2');
-                         */
-
-        (new ParseDonstroy)->createXML(
-            $fullBuild,
-            public_path('/storage/xml/donstroy:jkZvezdniy2'));
-
+        (new ParseDonstroy)->save(
+            $complex,
+            public_path('/storage/xml/donstroy:jkZvezdniy2')
+        );
     }
 }

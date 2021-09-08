@@ -48,7 +48,7 @@ class MRUjane extends Command
     {
         $this->info('xml:neometria:mrUjane');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '62',
             public_path('/storage/xml/neometria:Ujane'),
             'МР Южане');

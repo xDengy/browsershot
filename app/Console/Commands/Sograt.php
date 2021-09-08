@@ -50,12 +50,12 @@ class Sograt extends Command
     {
         $this->info('xml:europeya:sograt');
 
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=3',
             'Сограт',
             'Сограт',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:sograt'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($building, public_path('/storage/xml/europeya:sograt'));
     }
 }

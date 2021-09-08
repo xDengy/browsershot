@@ -48,7 +48,7 @@ class JKPerviy extends Command
     {
         $this->info('xml:neometria:jkPerviy');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '60',
             public_path('/storage/xml/neometria:jkPerviy'),
             'ЖК Первый');

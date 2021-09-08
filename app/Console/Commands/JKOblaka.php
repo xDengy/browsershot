@@ -48,7 +48,7 @@ class JKOblaka extends Command
     {
         $this->info('xml:neometria:jkOblaka');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '59',
             public_path('/storage/xml/neometria:Oblaka'),
             'ЖК Облака');

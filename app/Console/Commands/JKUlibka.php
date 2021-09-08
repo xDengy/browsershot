@@ -48,7 +48,7 @@ class JKUlibka extends Command
     {
         $this->info('xml:neometria:jkUlibka');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '36410',
             public_path('/storage/xml/neometria:Ulibka'),
             'ЖК Улыбка');

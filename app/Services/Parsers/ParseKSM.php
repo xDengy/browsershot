@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ParseKSM extends Parser
 {
-    public function parse(string $link, string $path, string $complexName)
+    public function complex(string $link, string $path, string $complexName)
     {
         $html = file_get_contents($link);
 
@@ -22,6 +22,7 @@ class ParseKSM extends Parser
         $tabs = $crawler->filter('a[role="tab"]')->each(function (Crawler $node, $i) {
             return $node->attr('aria-controls');
         });
+        unset($tabs[2]);
 
         foreach ($tabs as $tab) {
             $tabNumber = explode('-', $tab)[1];
@@ -29,27 +30,28 @@ class ParseKSM extends Parser
             $data['complex']['buildings']['building'][$tabNumber]['id'] = md5($tabNumber + 1 . '-я секция');
             $data['complex']['buildings']['building'][$tabNumber]['name'] = $tabNumber + 1 . '-я секция';
 
-            $data['complex']['buildings']['building'][$tabNumber]['flats']['flat'] = $crawler->filter('#' . $tab . ' .open-apartament')->each(function (Crawler $node, $i) use ($tabNumber) {
+            $data['complex']['buildings']['building'][$tabNumber]['flats']['flat'] =
+                $crawler->filter('.floor-apartaments span[data-section="' . $tabNumber . '"]')->each(function (Crawler $node, $i) use ($tabNumber) {
                 $plan = $node->attr('data-plain');
 
                 $floor = $node->attr('data-floor') + 2;
 
-                $rooms = explode(' ', $node->filter('.rooms')->each(function (Crawler $node, $i) {
+                $rooms = $node->filter('.rooms')->each(function (Crawler $node, $i) {
                     return $node->text();
-                })[1]
-                         )[0];
+                });
+                $rooms = explode(' ', $rooms[1])[0];
 
-                $area = explode(' ', $node->filter('.apartament-sq')->each(function (Crawler $node, $i) {
+                $area = $node->filter('.apartament-sq')->each(function (Crawler $node, $i) {
                     return $node->text();
-                })[1]
-                        )[0];
+                });
+                $area = explode(' ', $area[1])[0];
 
-                $price = explode(' ',
-                        $node->filter('.apartament-price')->each(function (Crawler $node, $i) {
-                            return $node->text();
-                        })[0]
-                         )[0] . '000';
+                $price = $node->filter('.apartament-price')->each(function (Crawler $node, $i) {
+                    return $node->text();
+                });
+                $price = explode(' ', $price[0])[0] . '000';
 
+                // На сайте кривая нумерация квартир
                 if ($node->attr('data-section') == 3) {
                     if ($rooms == 1) {
                         $apartment = $floor - 1;
@@ -74,17 +76,6 @@ class ParseKSM extends Parser
                     'plan' => 'https://ksm-14st.ru/wp-block/roommap/assets/images/apartaments/plain/' . $plan,
                 ];
             });
-
-
-            // todo провериьть и удалить
-            foreach ($data['complex']['buildings']['building'][$tabNumber]['flats']['flat'] as $key => $item) {
-                if ($data['complex']['buildings']['building'][$tabNumber]['flats']['flat'][$key] == null) {
-                    unset($data['complex']['buildings']['building'][$tabNumber]['flats']['flat'][$key]);
-                }
-                if ($data['complex']['buildings']['building'][$tabNumber]['flats']['flat'] == null) {
-                    unset($data['complex']['buildings']['building'][$tabNumber]);
-                }
-            }
         }
 
         $this->save($data, $path);

@@ -47,7 +47,7 @@ class Striji extends Command
     {
         $this->info('xml:imperialgorod:striji');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/striji/',
             public_path('/storage/xml/imperialgorod:striji'),
             'Стрижы');

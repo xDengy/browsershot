@@ -48,7 +48,7 @@ class JKAivazovsky extends Command
     {
         $this->info('xml:neometria:jkAivazovsky');
 
-        (new ParseNeometria)->parse(
+        (new ParseNeometria)->complex(
             '24070',
             public_path('/storage/xml/neometria:Aivazovsky'),
             'ЖК Айвазовский');

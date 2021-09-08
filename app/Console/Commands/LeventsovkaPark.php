@@ -50,7 +50,7 @@ class LeventsovkaPark extends Command
     {
         $this->info('xml:magistrat-don:leventsovka-park');
 
-        (new \App\Services\Parsers\ParseMagistratDon)->parse(
+        (new \App\Services\Parsers\ParseMagistratDon)->complex(
             'https://magistrat-don.ru/object/leventsovka-park/',
             public_path('/storage/xml/magistrat-don:leventsovka-park'),
             'Левенцовка парк');

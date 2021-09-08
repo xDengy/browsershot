@@ -50,12 +50,12 @@ class Marriott extends Command
     {
         $this->info('xml:europeya:marriott');
 
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=241',
             'Марриотт Гостиничный Комплекс',
             'Апартаменты в составе комплекса',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:marriott'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($building, public_path('/storage/xml/europeya:marriott'));
     }
 }

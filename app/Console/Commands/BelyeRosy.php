@@ -48,7 +48,7 @@ class BelyeRosy extends Command
     {
         $this->info('xml:imperialgorod:belye-rosy');
 
-        (new \App\Services\Parsers\ParserImperialgorod)->parse(
+        (new \App\Services\Parsers\ParserImperialgorod)->complex(
             'https://www.imperialgorod.ru/proekty/belye-rosy/',
             public_path('/storage/xml/imperialgorod:belye-rosy'),
             'Белые розы');

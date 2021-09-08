@@ -50,12 +50,12 @@ class PortugaliaJK extends Command
     {
         $this->info('xml:europeya:portugaliaJK');
 
-        $arr = (new \App\Services\Parsers\ParseEuropeya)->parse(
+        $building = (new \App\Services\Parsers\ParseEuropeya)->building(
             'https://bitrix.europeya.ru/shahmatki/agent/?filter-liter=37',
             'Португалия ЖК',
             'Литер 30 Квартал 3 очередь 2',
             'https://bitrix.europeya.ru/local/components/itiso/shahmatki.lists/ajax.php?');
 
-        (new \App\Services\Parsers\ParseEuropeya)->createXML($arr, public_path('/storage/xml/europeya:portugaliaJK'));
+        (new \App\Services\Parsers\ParseEuropeya)->save($building, public_path('/storage/xml/europeya:portugaliaJK'));
     }
 }

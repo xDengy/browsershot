@@ -50,7 +50,7 @@ class Element5 extends Command
     {
         $this->info('xml:magistrat-don:5-element');
 
-        (new \App\Services\Parsers\ParseMagistratDon)->parse(
+        (new \App\Services\Parsers\ParseMagistratDon)->complex(
             'https://magistrat-don.ru/object/jk-5-element/',
             public_path('/storage/xml/magistrat-don:5-element'),
             '5 элемент');

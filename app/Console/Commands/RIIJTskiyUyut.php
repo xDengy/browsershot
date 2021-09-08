@@ -49,7 +49,7 @@ class RIIJTskiyUyut extends Command
     {
         $this->info('xml:KSM:RIIJTskiyUyut');
 
-        (new ParseKSM)->parse(
+        (new ParseKSM)->complex(
             'https://ksm-14st.ru/choose-a-flat/',
             public_path('/storage/xml/KSM:RIIJTskiyUyut'),
             'ЖК РИИЖТский УЮТ');
