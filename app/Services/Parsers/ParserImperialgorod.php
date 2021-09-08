@@ -73,7 +73,7 @@ class ParserImperialgorod extends Parser
                             'apartment' => $apartment['number'],
                             'rooms'     => $apartment['rooms'],
                             'area'      => preg_replace('#[^0-9\.]+#', '', $apartment['area']),
-                            'price'     => preg_replace('#\D+#', '', $apartment['price']),
+                            'price'     => preg_replace('#[^0-9\.]+#', '', $apartment['price']),
                             'plan'      => $img ?? '',
                         ];
                     }

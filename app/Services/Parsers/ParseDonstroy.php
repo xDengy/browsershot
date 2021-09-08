@@ -10,81 +10,87 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ParseDonstroy
 {
-    public function createXML(array $arr, $path)
+    public function save(array $data, $path)
     {
-        $results = (new ArrayToXml($arr, 'complexes', true, 'UTF-8'))
+        $results = (new ArrayToXml($data, 'complexes', true, 'UTF-8'))
             ->prettify()
             ->toXml();
 
         file_put_contents($path . '.xml', $results);
     }
 
-    public function buildAllArrays($array, $name)
+    public function complex($buildings)
     {
-        $arr['complex']['id'] = md5($name);
-        $arr['complex']['name'] = $name;
+        $data = array_shift($buildings);
 
-        foreach ($array as $key => $item) {
-            $arr['complex']['buildings']['building'][] = $array[$key]['complex']['buildings']['building'][0] ??
-                $array[$key]['complex']['buildings']['building'];
-        }
-
-        return $arr;
-    }
-
-    public function buildArray(array $array, $name)
-    {
-        $data['complex']['buildings']['building'][0]['id'] = md5($name);
-        $data['complex']['buildings']['building'][0]['name'] = $name;
-
-        foreach ($array as $key => $item) {
-            $arr[] = $array[$key]['complex']['buildings']['building'][0]['flats']['flat'];
-        }
-
-        foreach ($arr as $value) {
-            foreach ($value as $v) {
-                $data['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
-            }
+        foreach ($buildings as $entrance) {
+            $data['complex']['buildings']['building'] = array_merge(
+                data_get($data, 'complex.buildings.building'),
+                data_get($entrance, 'complex.buildings.building'),
+            );
         }
 
         return $data;
     }
 
-    public function parse(string $link, string $complexName, string $sectionName)
+    public function building(array $entrances)
+    {
+        $data = array_shift($entrances);
+
+        foreach ($entrances as $entrance) {
+            $data['complex']['buildings']['building'][0]['flats']['flat'] = array_merge(
+                data_get($data, 'complex.buildings.building.0.flats.flat'),
+                data_get($entrance, 'complex.buildings.building.0.flats.flat'),
+            );
+        }
+
+        return $data;
+    }
+
+    public function entrance(string $link, string $complexName, string $sectionName)
     {
         $html = file_get_contents($link);
         $crawler = new Crawler($html);
 
-        $data['complex']['id'] = md5($complexName);
-        $data['complex']['name'] = $complexName;
+        $data = [
+            'complex' => [
+                'id' => md5($complexName),
+                'name' => $complexName,
+                'buildings' => [
+                    'building' => [
+                        [
+                            'id' => md5($sectionName),
+                            'name' => $sectionName,
+                            'flats' => [
+                                'flat' => $crawler->filter('.span3')->each(function (Crawler $node, $i) {
+                                    $apartment = $node->filter('a[itemprop="url"]')->text();
+                                    $apartment = explode(' ', $apartment)[1];
 
-        $data['complex']['buildings']['building'][0]['id'] = md5($sectionName);
-        $data['complex']['buildings']['building'][0]['name'] = $sectionName;
+                                    $img = 'https://donstroy.biz' . $node->filter('img[itemprop="thumbnailUrl"]')->attr('src');
 
-        $data['complex']['buildings']['building'][0]['flats']['flat'] =
-            $crawler->filter('.span3')->each(function (Crawler $node, $i) use ($data) {
-                $apartment = $node->filter('a[itemprop="url"]')->text();
-                $apartment = explode(' ', $apartment)[1];
+                                    $rooms = $node->filter('.korpus')->text();
+                                    $rooms = explode(' ', $rooms)[0];
 
-                $img = 'https://donstroy.biz' . $node->filter('img[itemprop="thumbnailUrl"]')->attr('src');
+                                    $area = $node->filter('.area')->text();
+                                    $area = explode(' ', $area)[1];
+                                    $area = str_replace(',', '.', $area);
 
-                $rooms = $node->filter('.korpus')->text();
-                $rooms = explode(' ', $rooms)[0];
+                                    $price = '';
 
-                $area = $node->filter('.area')->text();
-                $area = explode(' ', $area)[1];
-                $area = str_replace(',', '.', $area);
-
-                $price = '-';
-
-                return [
-                    'apartment' => $apartment,
-                    'room' => $rooms,
-                    'price' => $price,
-                    'area' => $area,
-                    'plan' => $img,
-                ];
-            });
+                                    return [
+                                        'apartment' => $apartment,
+                                        'room' => $rooms,
+                                        'price' => $price,
+                                        'area' => $area,
+                                        'plan' => $img,
+                                    ];
+                                }),
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
 
         return $data;
     }

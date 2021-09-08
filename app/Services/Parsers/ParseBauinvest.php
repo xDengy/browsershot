@@ -38,8 +38,8 @@ class ParseBauinvest extends Parser
 
                         $flat['apartment'] = $node->attr('data-num');
                         $flat['rooms'] = $node->attr('data-rooms');
-                        $flat['price'] = str_replace(' ₽', '', $node->attr('data-cost-total'));
-                        $flat['area'] = str_replace('"', '', $node->attr('data-area-full'));
+                        $flat['price'] = preg_replace('#[^0-9\.]+#', '', $node->attr('data-cost-total'));
+                        $flat['area'] = preg_replace('#[^0-9\.]+#', '', $node->attr('data-area-full'));
 
                         $img = str_replace('"', '', $node->attr('data-plan-img'));
                         if ($img == '') {

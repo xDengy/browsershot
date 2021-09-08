@@ -49,37 +49,32 @@ class JKTreeSkvera extends Command
     {
         $this->info('xml:donstroy:jkTreeSkvera');
 
-        $arr[] = (new ParseDonstroy)->parse(
+        $buildings = [];
+
+        $entrances = [];
+        $entrances[] = (new ParseDonstroy)->entrance(
             'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-tri-skvera/31-dom/1-pod-ezd.html',
             'ЖК Три сквера', '31 дом');
-
-        $arr[] = (new ParseDonstroy)->parse(
+        $entrances[] = (new ParseDonstroy)->entrance(
             'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-tri-skvera/31-dom/3-pod-ezd.html',
             'ЖК Три сквера', '31 дом');
+        $buildings[] = (new ParseDonstroy)->building($entrances);
 
-        $arr1[] = (new ParseDonstroy)->parse(
+        $entrances = [];
+        $entrances[] = (new ParseDonstroy)->entrance(
             'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-tri-skvera/38-dom/1-pod-ezd.html',
             'ЖК Три сквера', '38 дом');
-
-        $arr1[] = (new ParseDonstroy)->parse(
+        $entrances[] = (new ParseDonstroy)->entrance(
             'https://donstroy.biz/stroyashchiesya-ob-ekty/zhk-tri-skvera/38-dom/2-pod-ezd.html',
             'ЖК Три сквера', '38 дом');
+        $buildings[] = (new ParseDonstroy)->building($entrances);
 
-        $build = (new ParseDonstroy)->buildArray(
-            $arr,
-            '31 дом');
+        $complex = (new ParseDonstroy)->complex($buildings);
 
-        $build1 = (new ParseDonstroy)->buildArray(
-            $arr1,
-            '38 дом');
-
-        $fullBuild = (new ParseDonstroy)->buildAllArrays(
-            [$build, $build1],
-            'ЖК Три сквера');
-
-        (new ParseDonstroy)->createXML(
-            $fullBuild,
-            public_path('/storage/xml/donstroy:jkTreeSkvera'));
+        (new ParseDonstroy)->save(
+            $complex,
+            public_path('/storage/xml/donstroy:jkTreeSkvera')
+        );
 
     }
 }

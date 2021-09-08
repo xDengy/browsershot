@@ -31,11 +31,12 @@ class ParseDSN extends Parser
 
         $arr = [];
 
+        // Pagination
         for ($i = 1; $i <= $info[0]; $i++) {
             $html = file_get_contents('https://dsn-1.ru/services/197/?&city=0&order=1&direction=&mlspage=' . $i . '#obj');
             $crawler = new Crawler($html);
 
-            $arr[] = $crawler->filter('div[style="padding:5px"]')->each(function (Crawler $node, $i) use ($data) {
+            $arr[] = $crawler->filter('div[style="padding:5px"]')->each(function (Crawler $node, $i) use (&$data) {
                 $href = $node->filter('a')->attr('href');
 
                 $apartment = explode('cn=', $href)[1];
@@ -55,7 +56,7 @@ class ParseDSN extends Parser
                 $price = $node->filter('.price')->text();
                 $price = explode(' ', $price)[0];
 
-                return [
+                $data['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] = [
                     'apartment' => $apartment,
                     'room' => $rooms,
                     'price' => $price,
@@ -65,6 +66,7 @@ class ParseDSN extends Parser
             });
         }
 
+        // todo потестить и удалить после
         foreach ($arr as $value) {
             foreach ($value as $v) {
                 $data['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] = $v;
