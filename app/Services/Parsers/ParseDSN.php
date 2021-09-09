@@ -21,18 +21,16 @@ class ParseDSN extends Parser
         $info = explode(']', $info[1]);
 
         $data = [
-            'complexes' => [
-                'complex' => [
-                    'id' => md5($complexName),
-                    'name' => $complexName,
-                    'buildings' => [
-                        'building' => [
-                            [
-                                'id' => md5('Тимошенко улица,5а'),
-                                'name' => 'Тимошенко улица,5а',
-                                'flats' => [
-                                    'flat' => []
-                                ]
+            'complex' => [
+                'id' => md5($complexName),
+                'name' => $complexName,
+                'buildings' => [
+                    'building' => [
+                        [
+                            'id' => md5('Тимошенко улица,5а'),
+                            'name' => 'Тимошенко улица,5а',
+                            'flats' => [
+                                'flat' => []
                             ]
                         ]
                     ]
