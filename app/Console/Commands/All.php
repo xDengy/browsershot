@@ -46,6 +46,7 @@ class All extends Command
         $this->tryToCall('xml:neometria:jkMalina');
         $this->tryToCall('xml:neometria:jkPerviy');
         $this->tryToCall('xml:neometria:jkSkazka');
+        $this->tryToCall('xml:DSN:timoshenko');
         $this->tryToCall('xml:magistrat-don:5-element');
         $this->tryToCall('xml:magistrat-don:leventsovka-park');
         $this->tryToCall('xml:europeya:sograt');
@@ -74,7 +75,6 @@ class All extends Command
         $this->tryToCall('xml:sk-bauinvest:jkPochtoviy');
         $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
         $this->tryToCall('xml:sk-bauinvest:levada');
-        $this->tryToCall('xml:DSN:timoshenko');
         $this->tryToCall('xml:KSM:RIIJTskiyUyut');
         $this->tryToCall('xml:donstroy:jkZvezdniy2');
         $this->tryToCall('xml:donstroy:jkTreeSkvera');
