@@ -2,6 +2,7 @@
 
 namespace App\Services\Parsers;
 
+use App\Services\Helper;
 use DOMDocument;
 use GuzzleHttp\Client;
 use Spatie\ArrayToXml\ArrayToXml;
@@ -71,8 +72,8 @@ class ParseKSM extends Parser
                 return [
                     'apartment' => $apartment,
                     'room' => $rooms,
-                    'price' => $price,
-                    'area' => $area,
+                    'price' => Helper::clear($price),
+                    'area' => Helper::clear($area),
                     'plan' => 'https://ksm-14st.ru/wp-block/roommap/assets/images/apartaments/plain/' . $plan,
                 ];
             });

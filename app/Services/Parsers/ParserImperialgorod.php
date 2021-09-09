@@ -2,10 +2,8 @@
 
 namespace App\Services\Parsers;
 
-use DOMDocument;
+use App\Services\Helper;
 use GuzzleHttp\Client;
-use Spatie\ArrayToXml\ArrayToXml;
-use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ParserImperialgorod extends Parser
@@ -23,8 +21,8 @@ class ParserImperialgorod extends Parser
 
         $data = [
             'complex' => [
-                'id' => md5($complexName),
-                'name' => $complexName,
+                'id'        => md5($complexName),
+                'name'      => $complexName,
                 'buildings' => [
                     'building' => [],
                 ],
@@ -63,18 +61,12 @@ class ParserImperialgorod extends Parser
                             return $node->attr('src');
                         });
 
-                        if ($src[0] == '') {
-                            $img = $src[0];
-                        } else {
-                            $img = 'https://www.imperialgorod.ru' . $src[0];
-                        }
-
                         $building['flats']['flat'][] = [
                             'apartment' => $apartment['number'],
-                            'rooms' => $apartment['rooms'],
-                            'area' => preg_replace('#[^0-9\.]+#', '', $apartment['area']),
-                            'price' => preg_replace('#[^0-9\.]+#', '', $apartment['price']),
-                            'plan' => $img ?? '',
+                            'rooms'     => $apartment['rooms'],
+                            'area'      => Helper::clear($apartment['area']),
+                            'price'     => Helper::clear($apartment['price']),
+                            'plan'      => $src[0] ? 'https://www.imperialgorod.ru' . $src[0] : '',
                         ];
                     }
                 }

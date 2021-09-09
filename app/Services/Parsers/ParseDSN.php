@@ -2,10 +2,7 @@
 
 namespace App\Services\Parsers;
 
-use DOMDocument;
-use GuzzleHttp\Client;
-use Spatie\ArrayToXml\ArrayToXml;
-use Spatie\Browsershot\Browsershot;
+use App\Services\Helper;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ParseDSN extends Parser
@@ -59,7 +56,7 @@ class ParseDSN extends Parser
                 $img = explode('&', $img)[0];
 
                 $rooms = $node->filter('.titleObj')->text();
-                $rooms = preg_replace('#[^0-9]+#', '', $rooms);
+                $rooms = Helper::clear($rooms);
 
                 $op = $node->filter('.op1')->each(function (Crawler $node, $i) {
                     return $node->text();
@@ -68,7 +65,7 @@ class ParseDSN extends Parser
                 $area = explode('/', $op[3])[0];
 
                 $price = $node->filter('.price')->text();
-                $price = preg_replace('#[^0-9]+#', '', $price);
+                $price = Helper::clear($price);
 
                 $data['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] = [
                     'apartment' => $apartment,

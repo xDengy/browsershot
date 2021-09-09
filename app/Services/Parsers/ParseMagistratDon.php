@@ -13,7 +13,9 @@ class ParseMagistratDon extends Parser
     public function complex(string $link, string $path, string $complexName)
     {
         $crawler = new Crawler(
-            Browsershot::url($link)->bodyHtml()
+            Browsershot::url($link)
+                ->windowSize(1920, 1080)
+                ->bodyHtml()
         );
 
         $names = $crawler->filter('#korpus option')->each(function (Crawler $node, $i) {
@@ -38,7 +40,7 @@ class ParseMagistratDon extends Parser
             ]
         ];
 
-        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $names, $complexName, $data) {
+        $crawler->filter('.body-big')->each(function (Crawler $node, $i) use ($path, $names, $complexName, &$data) {
             foreach ($names as $nameKey => $name) {
                 $node->filter('tr')->each(function (Crawler $node, $i) use ($name, $nameKey, $data) {
                     $text = $node->filter('td')->each(function (Crawler $node, $i) {
@@ -71,9 +73,9 @@ class ParseMagistratDon extends Parser
                     }
                 });
             }
-
-            $this->save($data, $path);
         });
+
+        $this->save($data, $path);
     }
 
 }

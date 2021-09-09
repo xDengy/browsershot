@@ -2,10 +2,9 @@
 
 namespace App\Services\Parsers;
 
-use DOMDocument;
+use App\Services\Helper;
 use GuzzleHttp\Client;
 use Spatie\ArrayToXml\ArrayToXml;
-use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ParseEuropeya
@@ -88,7 +87,7 @@ class ParseEuropeya
             if ($body['TYPETEXT'] == 'Квартира' || $body['TYPETEXT'] == '' || $body['TYPETEXT'] == 'Апартаменты') {
                 $flat['apartment'] = $body['NUM'];
                 $flat['rooms'] = explode(' ', $body['ROOMTEXT'])[0];
-                $flat['price'] = preg_replace('#[^0-9\.\,]+#', '', $body['PRICEALL']);
+                $flat['price'] = Helper::clear($body['PRICEALL']);
                 $flat['area'] = $body['AREA'];
 
                 $img = $body['LAYOUT']['ORIGINAL_SRC'] ?? '';

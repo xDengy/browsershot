@@ -2,10 +2,8 @@
 
 namespace App\Services\Parsers;
 
-use DOMDocument;
-use GuzzleHttp\Client;
+use App\Services\Helper;
 use Spatie\ArrayToXml\ArrayToXml;
-use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ParseDonstroy
@@ -64,24 +62,12 @@ class ParseDonstroy
                             'flats' => [
                                 'flat' =>
                                     $crawler->filter('.span3')->each(function (Crawler $node, $i) {
-                                        $apartment = $node->filter('a[itemprop="url"]')->text();
-                                        $apartment = preg_replace('#[^0-9\.\,]+#', '', $apartment);;
-
-                                        $img = 'https://donstroy.biz' . $node->filter('.item-image a')->attr('href');
-
-                                        $rooms = $node->filter('.korpus')->text();
-                                        $rooms = preg_replace('#[^0-9\.\,]+#', '', $rooms);
-                                        $area = $node->filter('.area')->text();
-                                        $area = preg_replace('#[^0-9\.\,]+#', '', $area);
-
-                                        $price = '';
-
                                         return [
-                                            'apartment' => $apartment,
-                                            'room' => $rooms,
-                                            'price' => $price,
-                                            'area' => $area,
-                                            'plan' => $img,
+                                            'apartment' => Helper::clear($node->filter('a[itemprop="url"]')->text()),
+                                            'rooms' => Helper::clear($node->filter('.korpus')->text()),
+                                            'price' => '',
+                                            'area' => Helper::clear($node->filter('.area')->text()),
+                                            'plan' => 'https://donstroy.biz' . $node->filter('.item-image a')->attr('href'),
                                         ];
                                     }),
                             ]
