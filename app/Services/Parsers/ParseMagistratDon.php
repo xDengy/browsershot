@@ -25,15 +25,13 @@ class ParseMagistratDon extends Parser
         unset($names[0]);
 
         $data = [
-            'complexes' => [
-                'complex' => [
-                    'id' => md5($complexName),
-                    'name' => $complexName,
-                    'buildings' => [
-                        'building' => [
-                            [
+            'complex' => [
+                'id' => md5($complexName),
+                'name' => $complexName,
+                'buildings' => [
+                    'building' => [
+                        [
 
-                            ]
                         ]
                     ]
                 ]

@@ -67,7 +67,7 @@ class ParseDSN extends Parser
                 $price = $node->filter('.price')->text();
                 $price = Helper::clear($price);
 
-                $data['complexes']['complex']['buildings']['building'][0]['flats']['flat'][] = [
+                $data['complex']['buildings']['building'][0]['flats']['flat'][] = [
                     'apartment' => $apartment,
                     'room' => $rooms,
                     'price' => $price,
