@@ -28,7 +28,7 @@ class ParseNeometria extends Parser
                                 'name' => $liter,
                                 'flats' => [
                                     'flat' => $item->map(function ($apartment) {
-                                        [$number, $rooms] = explode('№ ', $apartment['title']);
+                                        [$rooms, $number] = explode('№ ', $apartment['title']);
 
                                         $number = str_replace('-комнатная кв. ', '', $number);
                                         $number = str_replace('Квартира с', '1', $number);
