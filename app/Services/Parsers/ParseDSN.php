@@ -71,8 +71,8 @@ class ParseDSN extends Parser
                     'apartment' => $apartment,
                     'room' => $rooms,
                     'price' => $price,
-                    'area' => $area,
-                    'plan' => 'https://dsn-1.ru' . $img,
+                    'area' => '', // Специально сделано пустая
+                    'plan' => stripos($img, 'http') === false ? 'https://dsn-1.ru' . $img : $img,
                 ];
             });
         }
