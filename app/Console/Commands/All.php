@@ -38,15 +38,14 @@ class All extends Command
      */
     public function handle()
     {
-        $this->tryToCall('xml:alfastroyinvest:all');
-        $this->tryToCall('xml:imperialgorod:rodnye-prostory');
-        $this->tryToCall('xml:imperialgorod:elegant');
-        $this->tryToCall('xml:imperialgorod:abrikosovo');
-        $this->tryToCall('xml:imperialgorod:belye-rosy');
-        $this->tryToCall('xml:imperialgorod:bosfor');
-        $this->tryToCall('xml:imperialgorod:fort-admiral');
-        $this->tryToCall('xml:imperialgorod:skazka-grad');
-        $this->tryToCall('xml:imperialgorod:striji');
+        $this->tryToCall('xml:neometria:mrUjane');
+        $this->tryToCall('xml:neometria:jkAivazovsky');
+        $this->tryToCall('xml:neometria:jkUlibka');
+        $this->tryToCall('xml:neometria:jkOtrajenie');
+        $this->tryToCall('xml:neometria:jkOblaka');
+        $this->tryToCall('xml:neometria:jkMalina');
+        $this->tryToCall('xml:neometria:jkPerviy');
+        $this->tryToCall('xml:neometria:jkSkazka');
         $this->tryToCall('xml:magistrat-don:5-element');
         $this->tryToCall('xml:magistrat-don:leventsovka-park');
         $this->tryToCall('xml:europeya:sograt');
@@ -63,14 +62,15 @@ class All extends Command
         $this->tryToCall('xml:metriks:jkSunHillsOlginka');
         $this->tryToCall('xml:metriks:jkCentralniy');
         $this->tryToCall('xml:metriks:jkSunHills');
-        $this->tryToCall('xml:neometria:mrUjane');
-        $this->tryToCall('xml:neometria:jkAivazovsky');
-        $this->tryToCall('xml:neometria:jkUlibka');
-        $this->tryToCall('xml:neometria:jkOtrajenie');
-        $this->tryToCall('xml:neometria:jkOblaka');
-        $this->tryToCall('xml:neometria:jkMalina');
-        $this->tryToCall('xml:neometria:jkPerviy');
-        $this->tryToCall('xml:neometria:jkSkazka');
+        $this->tryToCall('xml:alfastroyinvest:all');
+        $this->tryToCall('xml:imperialgorod:rodnye-prostory');
+        $this->tryToCall('xml:imperialgorod:elegant');
+        $this->tryToCall('xml:imperialgorod:abrikosovo');
+        $this->tryToCall('xml:imperialgorod:belye-rosy');
+        $this->tryToCall('xml:imperialgorod:bosfor');
+        $this->tryToCall('xml:imperialgorod:fort-admiral');
+        $this->tryToCall('xml:imperialgorod:skazka-grad');
+        $this->tryToCall('xml:imperialgorod:striji');
         $this->tryToCall('xml:sk-bauinvest:jkPochtoviy');
         $this->tryToCall('xml:sk-bauinvest:jkBauinvest');
         $this->tryToCall('xml:sk-bauinvest:levada');
