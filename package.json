@@ -10,10 +10,12 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "laravel-js-helpers": "^1.0.3"
     },
     "dependencies": {
         "crypto-js": "^4.1.1",
         "cyrillic-to-translit-js": "^3.1.0",
+        "lodash": "^4.17.21",
         "md5": "^2.3.0",
         "puppeteer": "^10.2.0",
         "xml-js": "^1.6.11"

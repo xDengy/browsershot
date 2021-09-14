@@ -11,14 +11,14 @@ class Magistrat extends Command
      *
      * @var string
      */
-    protected $signature = 'xml:magistrat';
+    protected $signature = 'xml:magistrat:all';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create XML magistrat';
+    protected $description = 'Create XML Magistrat';
 
     /**
      * Create a new command instance.

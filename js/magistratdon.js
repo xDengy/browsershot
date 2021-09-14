@@ -3,6 +3,7 @@ const fs = require('fs');
 const convert = require('xml-js');
 const crypto = require('crypto-js');
 const trans = require('cyrillic-to-translit-js');
+const _ = require('lodash');
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -13,10 +14,10 @@ const trans = require('cyrillic-to-translit-js');
         ],
     });
 
-    await complex(browser, 'https://magistrat-don.ru/object/jk-5-element/');
+    await complex(browser, 'https://magistrat-don.ru/object/jk-5-element/', '5 элемент');
 })();
 
-async function complex(browser, url) {
+async function complex(browser, url, complexName) {
     const page = await browser.newPage();
     await page._client.send('Emulation.clearDeviceMetricsOverride');
 
@@ -30,71 +31,86 @@ async function complex(browser, url) {
 
     console.log('Загрузилась таблица');
 
-    /*
-     */
-    // тут обработка
+    await build(page, complexName);
+
+    await page.close();
+    await browser.close();
+    console.log('browser closed');
+}
+
+async function build(page, complexName) {
     const complexes = {complexes: {complex: []}};
     const complex = {};
 
+    complex.id = crypto.MD5(complexName).toString();
+    complex.name = complexName;
+
     complex.buildings = await page.evaluate(() => {
-        let names = document.querySelectorAll('#korpus option');
-
         const buildings = {building: []};
-
         const building = {};
+
         building.flats = {flat: []};
 
-        for (let j = 0; j < names.length; j++) {
-            building.name = names[j].textContent;
-            let body = document.querySelector('.body-big');
-            let tr = body.querySelectorAll('tr');
-            for (let i = 0; i < tr.length; i++) {
-                let info = tr[i].getAttribute('onclick');
-                info = info.split(',');
-                let number = info[4].replace(/"/g, '');
-                let img = info[9].replace(/"/g, '');
-                let td = tr[i].querySelectorAll('td');
-                for (let i = 0; i < td.length; i++) {
-                    let rooms = td[3].textContent.replace(/\D/gu, '');
-                    let area = td[4].textContent.replace(/[^0-9\.]+/gu, '');
-                    let price = td[5].textContent.replace(/\D/gu, '');
-                    if (names[j].textContent === td[0].textContent) {
-                        buildings.building.push(
-                            {
-                                'id': td[0].textContent,
-                                'name': td[0].textContent,
-                                'flats': {
-                                    'flat': {
-                                        'number': number,
-                                        'rooms': rooms,
-                                        'price': price,
-                                        'area': area,
-                                        'img': 'https://magistrat-don.ru' + img,
-                                    }
-                                },
-                            }
-                        )
-                        break
-                    }
+        let body = document.querySelector('.body-big');
+
+        body.querySelectorAll('tr').forEach((element, index) => {
+
+            let info = element.getAttribute('onclick');
+            info = info.split(',');
+
+            let number = info[4].replace(/"/g, '');
+            let img = info[9].replace(/"/g, '');
+
+            let td = element.querySelectorAll('td');
+
+            let rooms = td[3].textContent.replace(/\D/gu, '');
+            let area = td[4].textContent.replace(/[^0-9\.]+/gu, '');
+            let price = td[5].textContent.replace(/\D/gu, '');
+
+            buildings.building.push(
+                {
+                    number: number,
+                    rooms: rooms,
+                    price: price,
+                    area: area,
+                    img: 'https://magistrat-don.ru' + img,
+                    name: td[0].textContent,
                 }
-            }
-        }
-        return buildings;
+            );
+        });
+
+        return buildings
     });
 
-    complex.id = 'crypto.MD5(building.name).toString()';
-    complex.name = 'building.name';
+    complex.buildings.building = _.chain(complex.buildings.building)
+        .groupBy('name')
+        .map((value, key) =>
+            (
+                {
+                    id: crypto.MD5(key).toString(),
+                    name: key,
+                    flats: {
+                        flat: value
+                    }
+                }
+            ))
+        .value()
+
+    for(let i = 0; i < complex.buildings.building.length; i++){
+        for(let j = 0; j < complex.buildings.building[i].flats.flat.length; j++) {
+            delete complex.buildings.building[i].flats.flat[j].name;
+        }
+    }
 
     complexes.complexes.complex.push(complex);
 
-    let options = {compact: true, ignoreComment: true, spaces: 4};
+    let options = {compact: true, ignoreComment: false, spaces: 4};
     let result = convert.js2xml(complexes, options);
 
     fs.writeFileSync(
-        __dirname + '/../public/storage/xml/_magistratdon:' +
+        __dirname + '/../public/storage/xml/magistrat-don:' +
         trans().transform(complex.name, '-').toLowerCase() + '.xml',
         '<?xml version="1.0" encoding="UTF-8" ?>\n' + result
     );
 
-    console.log('done');
 }
