@@ -73,7 +73,7 @@ async function build(page, complexName) {
                     rooms: rooms,
                     price: price,
                     area: area,
-                    img: 'https://magistrat-don.ru' + img,
+                    plan: 'https://magistrat-don.ru' + img,
                     name: td[0].textContent,
                 }
             );
