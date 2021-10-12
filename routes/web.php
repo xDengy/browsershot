@@ -3,5 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return 'Parser';
+    return view('welcome');
+});
+Route::get('/handler.php', function () {
+    return view('handler');
 });
